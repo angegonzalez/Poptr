@@ -1,0 +1,16 @@
+.container-fluid
+{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-top: 2rem;
+    border-radius: 10px ;
+    box-shadow: 2px 4px 8px 0px rgba(46, 61, 73, 0.2);
+}
+footer
+{
+    text-align: center;
+}
+.container-title
+{
+    margin-top: 100px;
+}
