@@ -1,0 +1,49 @@
+.login-card {
+  padding: 1rem;
+  position: relative;
+  right: -0.7rem;
+  top: 0.7rem;
+  margin-top: 25%;
+  margin-bottom: 25%;
+  background-color: white;
+}
+.login-card-bg {
+  border: none;
+  color: white;
+  background: #ff9966; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to left,
+    #ff5e62,
+    #ff9966
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to left,
+    #ff5e62,
+    #ff9966
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  box-shadow: 2px 4px 38px 0px rgba(46, 61, 73, 0.2);
+}
+input.form-control {
+  background: none;
+}
+.login-card h2 {
+  background: linear-gradient(to left, #ff5e62, #ff9966);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.img-landing:hover {
+  transition: ease 1s;
+  -webkit-transform: scale(0.8);
+  -ms-transform: scale(0.5);
+  transform: scale(0.8);
+  
+}
+.img-caption{
+  box-shadow: 2px 4px 8px 0px rgba(46, 61, 73, 0.2);
+  border-radius: 10px;
+  padding: 1.5rem;
+  text-align: center;
+  margin-left: 15%;
+  margin-right: 15%;
+}

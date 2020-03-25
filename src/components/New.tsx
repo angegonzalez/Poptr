@@ -9,6 +9,12 @@ export interface NewProps {
 }
 
 const New: React.SFC<NewProps> = props => {
+  const inputRef = React.useRef<HTMLInputElement>(null)
+  const onClickComment= () => {
+    if(inputRef && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }
   return (
     <>
       <div className="card" style={{ margin: "1rem" }}>
@@ -41,7 +47,7 @@ const New: React.SFC<NewProps> = props => {
               <button
                 type="button"
                 className="btn btn-outline-secondary btn-block"
-                onClick={() => {}}
+                onClick={onClickComment}
               >
                 Comentar
               </button>
@@ -68,6 +74,7 @@ const New: React.SFC<NewProps> = props => {
             <div className="media-body">
               <h6 className="mt-0">{props.userName}</h6>
               <input
+                ref={inputRef}
                 type="text"
                 className="form-control"
                 placeholder="Escribe un comentario"

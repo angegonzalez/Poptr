@@ -20,7 +20,7 @@ const NewsSection: React.SFC = () => {
       <div className="row">
         <div className="col-1"></div>
         <div className="col-7">
-          <div className="container-fluid">
+          <div className="container-fluid news_section">
             <h3 className="text-weight-bold">Publicaciones</h3>
             {news?.map(el => {
               console.log(el);
