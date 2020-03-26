@@ -15,13 +15,11 @@ const Landing: React.SFC<ILanding> = props => {
   const [password, setPassword] = React.useState("");
 
   const doLogin = () => {
-    console.log("si sr");
     firebase
       .auth()
       .signInWithEmailAndPassword(userName, password)
       .then(() => {
         props.setLoggedIn(true);
-        console.log("Entro");
       })
       .catch(err => {
         alert("Se produjo el siguiente error al intentar iniciar: " + err);
@@ -48,7 +46,6 @@ const Landing: React.SFC<ILanding> = props => {
                       placeholder="Tu correo electrónico 📧"
                       onChange={e => {
                         setUserName(e.target.value);
-                        console.log(e.target.value);
                       }}
                     />
                   </div>
@@ -59,7 +56,6 @@ const Landing: React.SFC<ILanding> = props => {
                       id="exampleInputPassword1"
                       placeholder="Tu contraseña 🔑"
                       onChange={e => {
-                        console.log(e.target.value);
                         setPassword(e.target.value);
                       }}
                     />

@@ -3,6 +3,7 @@ import React from 'react'
 export interface CommentaryProps {
     userName: string;
     userComment: string;
+    userPhoto: string;
 }
  
 const Commentary: React.SFC<CommentaryProps> = (props) => {
@@ -10,7 +11,7 @@ const Commentary: React.SFC<CommentaryProps> = (props) => {
         <>
         <div className="media">
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/d/d3/User_Circle.png"
+              src={props.userPhoto}
               width="40"
               height="40"
               className="d-inline-block align-top"
