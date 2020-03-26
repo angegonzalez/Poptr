@@ -3,9 +3,11 @@
   position: relative;
   right: -0.7rem;
   top: 0.7rem;
-  margin-top: 25%;
+  margin-top: 55%;
   margin-bottom: 25%;
   background-color: white;
+  z-index: 1031;
+
 }
 .login-card-bg {
   border: none;
@@ -46,4 +48,11 @@ input.form-control {
   text-align: center;
   margin-left: 15%;
   margin-right: 15%;
+}
+.footer-img
+{
+  z-index: 1;
+  height: 670px;
+  width: 45%;
+  position: static;
 }

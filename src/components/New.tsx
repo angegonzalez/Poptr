@@ -63,6 +63,7 @@ const New: React.SFC<NewProps> = props => {
           {props.comments.map(element => {
             return (
               <Commentary
+                key={element.user}
                 userName={element.user}
                 userComment={element.comment}
               ></Commentary>

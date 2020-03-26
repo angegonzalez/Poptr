@@ -4,7 +4,12 @@ import NewsSection from "./components/NewsSection";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 import Landing from "./components/Landing";
 
 const firebaseConfig = {
@@ -19,16 +24,28 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 function App() {
+  const [isLoggedIn, setLoggedIn] = React.useState(false);
   return (
     <>
       <Router>
         <NavBar />
         <>
-        <Switch>
-          <Redirect exact={true} path="/" to="/app"/>
-          <Route exact={true} path="/app" component={Landing}></Route>
-          <Route exact={true} path="/home" component={NewsSection}></Route>
-        </Switch>
+          <Switch>
+            {isLoggedIn ? (
+              <Redirect exact={true} path="/app" to="/home"></Redirect>
+            ) : (
+              console.log("Not logged in yet")
+            )}
+            <Redirect exact={true} path="/" to="/app" />
+            <Route
+              exact={true}
+              path="/app"
+              render={props => <Landing {...props} setLoggedIn={setLoggedIn} />}
+            ></Route>
+            <Route exact={true} path="/home">
+              {isLoggedIn ? <NewsSection /> : <Redirect to="/app" />}
+            </Route>
+          </Switch>
         </>
       </Router>
     </>

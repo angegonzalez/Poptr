@@ -2,9 +2,31 @@ import React from "react";
 import "../styles/Landing.css";
 import landing from "../resources/landing.svg";
 import CardInfo from "./CardInfo";
+import footer from "../resources/footer_img.svg";
+import * as firebase from "firebase/app";
 
-const Landing: React.SFC = () => {
+interface ILanding {
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Landing: React.SFC<ILanding> = props => {
   const [cardsVisibility, setCards] = React.useState(false);
+  const [userName, setUserName] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  const doLogin = () => {
+    console.log("si sr");
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(userName, password)
+      .then(() => {
+        props.setLoggedIn(true);
+        console.log("Entro");
+      })
+      .catch(err => {
+        alert("Se produjo el siguiente error al intentar iniciar: " + err);
+      });
+  };
 
   return (
     <>
@@ -24,6 +46,10 @@ const Landing: React.SFC = () => {
                       id="exampleInputEmail1"
                       aria-describedby="emailHelp"
                       placeholder="Tu correo electrónico 📧"
+                      onChange={e => {
+                        setUserName(e.target.value);
+                        console.log(e.target.value);
+                      }}
                     />
                   </div>
                   <div className="form-group">
@@ -32,11 +58,19 @@ const Landing: React.SFC = () => {
                       className="form-control"
                       id="exampleInputPassword1"
                       placeholder="Tu contraseña 🔑"
+                      onChange={e => {
+                        console.log(e.target.value);
+                        setPassword(e.target.value);
+                      }}
                     />
                   </div>
                   <div className="form-row">
                     <div className="form-group col-sm-12 col-md-12 col-md-12 col-lg-6">
-                      <button type="submit" className="btn btn-dark btn-block">
+                      <button
+                        type="button"
+                        className="btn btn-dark btn-block"
+                        onClick={doLogin}
+                      >
                         Iniciar ➡
                       </button>
                     </div>
@@ -62,7 +96,7 @@ const Landing: React.SFC = () => {
               onMouseEnter={() => {
                 setCards(true);
               }}
-              onMouseOut= { ()=> {
+              onMouseOut={() => {
                 setCards(false);
               }}
             ></img>
@@ -85,6 +119,9 @@ const Landing: React.SFC = () => {
             )}
           </div>
         </div>
+      </div>
+      <div className={"fixed-bottom d-none d-xl-block"}>
+        <img src={footer} className={"footer-img"}></img>
       </div>
     </>
   );
