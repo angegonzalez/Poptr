@@ -14,3 +14,24 @@ footer
 {
     margin-top: 100px;
 }
+#create-new-input:focus{
+    background-color: white;
+    border-color:  #ff5e62;
+    box-shadow: 0px 0px 6px 0px #ff9966;
+    cursor: pointer;
+
+}
+.new-txtarea{
+    resize: none;
+    width: 100%;
+    min-height: 120px;
+    overflow: hidden;
+    display: block;
+    border: none;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    font-size: 20px;
+}
+

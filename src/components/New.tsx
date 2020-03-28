@@ -6,11 +6,13 @@ import { db } from "../App";
 
 export interface NewProps {
   id: string;
-  userName: string;
+  userNameLoggedIn: string;
+  userNameNew: string;
   userDescription: string;
   newDescription: string;
-  userPhoto: string;
-  comments: [{ user: string; comment: string; photo: string}];
+  userPhotoLoggedIn: string;
+  userPhotoNew: string;
+  comments: [{ user: string; comment: string; photo: string }];
 }
 
 const New: React.SFC<NewProps> = props => {
@@ -28,20 +30,19 @@ const New: React.SFC<NewProps> = props => {
       .doc(props.id)
       .update({
         comments: firebase.firestore.FieldValue.arrayUnion({
-          "comment": commentary,
-          "user": props.userName,
-          "photo": props.userPhoto
+          comment: commentary,
+          user: props.userNameLoggedIn,
+          photo: props.userPhotoLoggedIn
         })
       });
   };
 
   const handleInputCommentary = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter"){
+    if (e.key === "Enter") {
       publishCommentary();
       if (inputRef && inputRef.current) {
-        inputRef.current.value="";
+        inputRef.current.value = "";
       }
-
     }
   };
 
@@ -51,14 +52,14 @@ const New: React.SFC<NewProps> = props => {
         <div className="card-header">
           <div className="media mt-3">
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/d/d3/User_Circle.png"
+              src={props.userPhotoNew}
               width="40"
               height="40"
               className="d-inline-block align-top"
               alt=""
             />
             <div className="media-body">
-              <h6 className="ml-2">Test username</h6>
+              <h6 className="ml-2">{props.userNameNew}</h6>
               <p className="ml-2 mt-0">{props.userDescription}</p>
             </div>
           </div>
@@ -82,27 +83,27 @@ const New: React.SFC<NewProps> = props => {
             </div>
           </div>
           <p className="mt-3 mb-4"></p>
-          {props.comments.map(element => {
+          {props.comments.map((element, index) => {
             return (
               <Commentary
-                key={element.user}
+                key={index}
                 userName={element.user}
                 userComment={element.comment}
-                userPhoto= {element.photo}
+                userPhoto={element.photo}
               ></Commentary>
             );
           })}
 
           <div className="media">
             <img
-              src={props.userPhoto}
+              src={props.userPhotoLoggedIn}
               className="mr-3"
               alt="..."
               width="40"
               height="40"
             />
             <div className="media-body">
-              <h6 className="mt-0 font-weight-bold">{props.userName}</h6>
+              <h6 className="mt-0 font-weight-bold">{props.userNameLoggedIn}</h6>
               <input
                 ref={inputRef}
                 type="text"
