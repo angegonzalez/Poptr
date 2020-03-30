@@ -3,13 +3,12 @@
   position: relative;
   right: -0.7rem;
   top: 0.7rem;
-  margin-top: 55%;
-  margin-bottom: 25%;
   background-color: white;
   z-index: 1031;
-
+  color: black;
 }
 .login-card-bg {
+  z-index: 1031;
   border: none;
   color: white;
   background: #ff9966; /* fallback for old browsers */
@@ -23,8 +22,8 @@
     #ff5e62,
     #ff9966
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
   box-shadow: 2px 4px 38px 0px rgba(46, 61, 73, 0.2);
+  margin-right: 14px;
 }
 input.form-control {
   background: none;
@@ -39,9 +38,8 @@ input.form-control {
   -webkit-transform: scale(0.8);
   -ms-transform: scale(0.5);
   transform: scale(0.8);
-  
 }
-.img-caption{
+.img-caption {
   box-shadow: 2px 4px 8px 0px rgba(46, 61, 73, 0.2);
   border-radius: 10px;
   padding: 1.5rem;
@@ -49,9 +47,8 @@ input.form-control {
   margin-left: 15%;
   margin-right: 15%;
 }
-.footer-img
-{
-  z-index: 1;
+.footer-img {
+  z-index: 0;
   height: 670px;
   width: 45%;
   position: static;

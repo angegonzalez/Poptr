@@ -18,7 +18,6 @@ const NewsSection: React.SFC = () => {
 
   let userDescription = "";
   React.useEffect(() => {
-    console.log("render");
     const fetchData = async () => {
       db.collection("news").onSnapshot(doc => {
         const data = doc.docs.map(doc => doc.data());
@@ -35,24 +34,16 @@ const NewsSection: React.SFC = () => {
 
   const getUser = () => {
     const loggedUser = firebase.auth().currentUser?.email;
-    firebase
-      .database()
-      .ref("/users")
-      .once("value")
-      .then(snapshot => {
-        let array: [
-          {
-            user: string;
-            userDescription: string;
-            userName: string;
-            userPhoto: string;
-          }
-        ] = snapshot.val() || [];
-        array.map(el => {
-          if (el.user === loggedUser) {
-            setUserLoggedIn(el.userName);
-            setUserPhoto(el.userPhoto);
-            userDescription = el.userDescription;
+
+    db.collection("users")
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          const data = doc.data();
+          if (data.user === loggedUser) {
+            setUserLoggedIn(data.userName);
+            setUserPhoto(data.userPhoto);
+            userDescription = data.userDescription;
           }
         });
       });
@@ -79,16 +70,6 @@ const NewsSection: React.SFC = () => {
         console.log("Data recorded in Database");
       });
   };
-
-  $(".body-content")
-    .on("change keyup keydown paste cut", "textarea", function() {
-      $(this)
-        .height(0)
-        .height(this.scrollHeight);
-    })
-    .find("textarea")
-    .change();
-
   getUser();
   return (
     <>
@@ -144,16 +125,14 @@ const NewsSection: React.SFC = () => {
                   </div>
                   <div className="body-content mt-4">
                     <textarea
-                      rows={1}
                       className="new-txtarea"
-                      aria-label="With textarea"
                       placeholder={"Pregunta algo acerca de un trámite"}
                       onChange={e => setCreatedNew(e.target.value)}
                       onKeyPress={e => {
-                        if (e.key === "Enter"){
+                        if (e.key === "Enter") {
                           sendCreatedNew();
                           handleCloseModal();
-                        } 
+                        }
                       }}
                     ></textarea>
                   </div>
@@ -161,8 +140,8 @@ const NewsSection: React.SFC = () => {
                 </Modal.Body>
                 <Modal.Footer>
                   <small>
-                    Consejo: Intenta preguntar lo mas claro posible para que todos te
-                    entiendan 🏆
+                    Consejo: Intenta preguntar lo mas claro posible para que
+                    todos te entiendan 🏆
                   </small>
                 </Modal.Footer>
               </Modal>
@@ -183,7 +162,7 @@ const NewsSection: React.SFC = () => {
                     ></New>
                   );
                 })
-              : console.log("Vacio")}
+              : <></>}
             <footer>
               <small>Desarrollado con ♥ por: Angel Mateo Gonzalez ✈</small>
             </footer>
