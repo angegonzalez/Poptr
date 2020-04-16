@@ -19,7 +19,7 @@ const NewsSection: React.SFC = () => {
   let userDescription = "";
   React.useEffect(() => {
     const fetchData = async () => {
-      db.collection("news").onSnapshot(doc => {
+      db.collection("news").orderBy("timestamp","desc").onSnapshot(doc => {
         const data = doc.docs.map(doc => doc.data());
         for (let i = 0; i < data.length; i += 1) {
           Object.defineProperty(data[i], "id", {
@@ -31,10 +31,8 @@ const NewsSection: React.SFC = () => {
     };
     fetchData();
   }, []);
-
   const getUser = () => {
-    const loggedUser = firebase.auth().currentUser?.email;
-
+    const loggedUser = firebase.auth().currentUser!.email;
     db.collection("users")
       .get()
       .then(querySnapshot => {
@@ -48,36 +46,44 @@ const NewsSection: React.SFC = () => {
         });
       });
   };
+  getUser();
+
   const handleCreateNew = () => {
     handleShowModal();
     document.getElementById("create-new-input")?.blur();
   };
 
   const sendCreatedNew = () => {
-    let data = {
-      comments: [],
-      newDescription: createdNew,
-      userDescription: userDescription,
-      userName: userLoggedIn,
-      userPhoto: userPhoto
-    };
-    firebase
-      .firestore()
-      .collection("news")
-      .doc()
-      .set(data)
-      .then(() => {
-        console.log("Data recorded in Database");
-      });
+    if(userDescription !=="")
+    {
+      let data = {
+        comments: [],
+        newDescription: createdNew,
+        userDescription: userDescription,
+        userName: userLoggedIn,
+        userPhoto: userPhoto,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      firebase
+        .firestore()
+        .collection("news")
+        .doc()
+        .set(data)
+        .then(() => {
+          console.log("Data recorded in Database");
+        });
+    }
+    else alert('No se ha cargado el usuario')
+    
   };
-  getUser();
+
   return (
     <>
-      <div className="row mb-3">
-        <div className="col-1"></div>
-        <div className="col-md-6 col-sm-10">
+      <div className="row mb-3 mr-2 ml-2
+      ">
+        <div className="col-md-8 col-sm-10 col-lg-6">
           <div className="container-fluid news_section">
-            <h3 className="text-weight-bold">Publicaciones</h3>
+            <h2 className=" mt-2 mb-2" style={{textAlign: "center"}}>Publicaciones</h2>
             <div className="create-new mt-4 mb-4 ml-3 mr-3">
               <div className="media">
                 <img

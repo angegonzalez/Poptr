@@ -17,10 +17,10 @@ const NavBar: React.SFC<RouteComponentProps> = props => {
     <nav className="navbar navbar-expand-lg navbar-dark">
       <a className="navbar-brand font-weight-bold" href="/">
         <img
-          //src={logo}
-          width="30"
-          height="30"
-          className="d-inline-block align-top"
+          src="https://image.flaticon.com/icons/svg/2706/2706754.svg"
+          width="35"
+          height="35"
+          className="d-inline-block align-top mr-2"
           alt=""
         />
         Poptr
@@ -45,15 +45,6 @@ const NavBar: React.SFC<RouteComponentProps> = props => {
               activeClassName="nav-item active"
             >
               Inicio<span className="sr-only">(current)</span>
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink
-              to="/home"
-              className="nav-link"
-              activeClassName="nav-item"
-            >
-              Publicaciones<span className="sr-only">(current)</span>
             </NavLink>
           </li>
           <li className="nav-item">

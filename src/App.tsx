@@ -11,6 +11,7 @@ import {
   Redirect
 } from "react-router-dom";
 import Landing from "./components/Landing";
+import TransactionSection from "./components/TransactionsSection";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBUKo-7_RNCanGw1_EtGc8bejX5Hk2-Gag",
@@ -44,6 +45,9 @@ function App() {
             ></Route>
             <Route exact={true} path="/home">
               {isLoggedIn ? <NewsSection /> : <Redirect to="/app" />}
+            </Route>
+            <Route exact={true} path="/transactions">
+              {isLoggedIn ? <TransactionSection/> : <Redirect to="/app" />}
             </Route>
           </Switch>
         </>

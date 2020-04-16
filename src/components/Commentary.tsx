@@ -9,7 +9,7 @@ export interface CommentaryProps {
 const Commentary: React.SFC<CommentaryProps> = (props) => {
     return ( 
         <>
-        <div className="media">
+        <div className="media" style={{borderLeft: "3.5px solid #ff5e62", paddingLeft: "10px"}}>
             <img
               src={props.userPhoto}
               width="40"
@@ -18,7 +18,7 @@ const Commentary: React.SFC<CommentaryProps> = (props) => {
               alt=""
             />
             <div className="media-body">
-              <h6 className="ml-2">{props.userName}</h6>
+              <h6 className="ml-2 mb-0">{props.userName}</h6>
               <p className="ml-2">{props.userComment} </p>
             </div>
           </div>
