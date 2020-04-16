@@ -1,44 +1,26 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Poptr 
+Una red social que permite la conexion entre usuarios que desean hacer los trámites de entidades publicas o provadas de una mejor forma, comunicandose con otras personas y haciendo una mejor gestion sobre sus tramites.
 
-## Available Scripts
+### Proyecto: Estructuras de datos // UNAL 2020-I
+El proyecto contempla el uso de estructuras de datos, su implementacion y desarrrollo en las distintas operaciones de la red social
 
-In the project directory, you can run:
+### Recursos y Software usado:
+Lenguaje de programación: TypeScript + React 
+<br/>
+Gestor de base de datos ( no relacional ): Firebase
+### Para desarrolladores:
+Este proyecto fue creado con la herramienta Create React App.
+<br/>
+Para poder correr el proyecto es necesario tener instalada la herramienta <a href= "https://nodejs.org/es/"> Node JS </a>
+<br/>
+Una vez instalado NodeJS, asegurese que este se encuentra en el PATH de su sistema operativo (que indica que lo puede usar en cualquier carpeta), ejecute el comando sobre la carpeta donde se encuentra el archivo .json
+``` 
+npm start
+```
+Si todo sale bien, deberia ver la pantalla inicial de la aplicacion (React App) en su navegador por defecto, en la ruta : http://localhost:3000 generalmente. 
 
-### `npm start`
+#### Codigo y localizacion de archivos:
+En la carpeta src, se encuentra todo el codigo referente al proyecto, y en la carpeta classes, se podrán encontrar con las distintas implementaciones de las estructuras, llegando a un acuerdo frente a que estas mismas serán trabajadas durante la ejecución del proyecto más no serán persistentes durante todo el tiempo de vida de la aplicacion.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+##### Thanks for colaborating and happy hacking!
+###### Idea, commit inicial por: Angel Mateo González
