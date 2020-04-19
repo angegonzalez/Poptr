@@ -5,6 +5,7 @@ import { db } from "../App";
 import * as firebase from "firebase";
 import $ from "jquery";
 import Modal from "react-bootstrap/Modal";
+import UserSection from "./UserSection";
 
 const NewsSection: React.SFC = () => {
   const [news, setNews] = React.useState<firebase.firestore.DocumentData[]>([]);
@@ -19,15 +20,17 @@ const NewsSection: React.SFC = () => {
   let userDescription = "";
   React.useEffect(() => {
     const fetchData = async () => {
-      db.collection("news").orderBy("timestamp","desc").onSnapshot(doc => {
-        const data = doc.docs.map(doc => doc.data());
-        for (let i = 0; i < data.length; i += 1) {
-          Object.defineProperty(data[i], "id", {
-            value: doc.docs[i].id
-          });
-        }
-        setNews(data);
-      });
+      db.collection("news")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((doc) => {
+          const data = doc.docs.map((doc) => doc.data());
+          for (let i = 0; i < data.length; i += 1) {
+            Object.defineProperty(data[i], "id", {
+              value: doc.docs[i].id,
+            });
+          }
+          setNews(data);
+        });
     };
     fetchData();
   }, []);
@@ -35,8 +38,8 @@ const NewsSection: React.SFC = () => {
     const loggedUser = firebase.auth().currentUser!.email;
     db.collection("users")
       .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
           const data = doc.data();
           if (data.user === loggedUser) {
             setUserLoggedIn(data.userName);
@@ -54,15 +57,14 @@ const NewsSection: React.SFC = () => {
   };
 
   const sendCreatedNew = () => {
-    if(userDescription !=="")
-    {
+    if (userDescription !== "") {
       let data = {
         comments: [],
         newDescription: createdNew,
         userDescription: userDescription,
         userName: userLoggedIn,
         userPhoto: userPhoto,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       };
       firebase
         .firestore()
@@ -72,18 +74,23 @@ const NewsSection: React.SFC = () => {
         .then(() => {
           console.log("Data recorded in Database");
         });
-    }
-    else alert('No se ha cargado el usuario')
-    
+    } else alert("No se ha cargado el usuario");
   };
 
   return (
     <>
-      <div className="row mb-3 mr-2 ml-2
-      ">
+      <div
+        className="row mb-3 mr-2 ml-2 mt-4
+      "
+      >
+        <div className="col-lg-3">
+          <UserSection></UserSection>
+        </div>
         <div className="col-md-8 col-sm-10 col-lg-6">
-          <div className="container-fluid news_section">
-            <h2 className=" mt-2 mb-2" style={{textAlign: "center"}}>Publicaciones</h2>
+          <div className="container-fluid news_section mb-3">
+            <h2 className=" mt-2 mb-2" style={{ textAlign: "center" }}>
+              Publicaciones
+            </h2>
             <div className="create-new mt-4 mb-4 ml-3 mr-3">
               <div className="media">
                 <img
@@ -133,8 +140,8 @@ const NewsSection: React.SFC = () => {
                     <textarea
                       className="new-txtarea"
                       placeholder={"Pregunta algo acerca de un trámite"}
-                      onChange={e => setCreatedNew(e.target.value)}
-                      onKeyPress={e => {
+                      onChange={(e) => setCreatedNew(e.target.value)}
+                      onKeyPress={(e) => {
                         if (e.key === "Enter") {
                           sendCreatedNew();
                           handleCloseModal();
@@ -152,26 +159,35 @@ const NewsSection: React.SFC = () => {
                 </Modal.Footer>
               </Modal>
             </div>
-            {news.length !== 0
-              ? news.map(el => {
-                  return (
-                    <New
-                      key={el.id}
-                      id={el.id}
-                      userNameLoggedIn={userLoggedIn}
-                      userNameNew={el.userName}
-                      userDescription={el.userDescription}
-                      newDescription={el.newDescription}
-                      userPhotoLoggedIn={userPhoto}
-                      userPhotoNew={el.userPhoto}
-                      comments={el.comments}
-                    ></New>
-                  );
-                })
-              : <></>}
+            {news.length !== 0 ? (
+              news.map((el) => {
+                return (
+                  <New
+                    key={el.id}
+                    id={el.id}
+                    userNameLoggedIn={userLoggedIn}
+                    userNameNew={el.userName}
+                    userDescription={el.userDescription}
+                    newDescription={el.newDescription}
+                    userPhotoLoggedIn={userPhoto}
+                    userPhotoNew={el.userPhoto}
+                    comments={el.comments}
+                  ></New>
+                );
+              })
+            ) : (
+              <></>
+            )}
             <footer>
               <small>Desarrollado con ♥ por: Angel Mateo Gonzalez ✈</small>
             </footer>
+          </div>
+        </div>
+        <div className="col-lg-3">
+          <div className="trending-card mb-4" style={{ padding: "1rem", color: "white" }}>
+              <h5 className="mb-5" >
+                Trending 🔥
+              </h5>
           </div>
         </div>
       </div>
