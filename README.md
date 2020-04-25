@@ -26,14 +26,11 @@ En la carpeta src, se encuentra todo el codigo referente al proyecto, y en la ca
 #### Notas: 
 Para la realizacion de pruebas de carga en memoria, asegurese de seguir los siguientes pasos: 
 <br/>
-<li>
-    <ul> Cambie la linea de codigo que se encuentra en `package.json` (linea 28) por: <ul>
-    ``` 
-    react-scripts start --max-old-space-size=4096
-    ``` 
-    <ul> El archivo `Users.js` en classes, se encuentra comentado, asegurese de que no lo esté</ul>
-    <ul> En `Landing.tsx` asegurese de descomentar la linea de `import` y lea los comentarios para realizar las pruebas que requiera</ul>
-<li>
+<ul>
+    <li> Cambie la linea de codigo que se encuentra en `package.json` (linea 28) por:  react-scripts start --max-old-space-size=4096</li>
+    <li> El archivo `Users.js` en classes, se encuentra comentado, asegurese de que no lo esté</li>
+    <li> En `Landing.tsx` asegurese de descomentar la linea de `import` y lea los comentarios para realizar las pruebas que requiera</li>
+</ul>
 <br/>
 Por motivos de carga de datos en la memoria, el lenguaje, y en especifico, NodeJS, le pedirán grandes recursos de memoria, asi que asegurese de liberar memoria suficiente (4GB al momento de hacer las pruebas)
 <br/>
