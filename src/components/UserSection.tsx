@@ -6,7 +6,6 @@ export interface UserSectionProps {}
 
 const UserSection: React.SFC<UserSectionProps> = () => {
   const [users, setUsers] = React.useState<firebase.firestore.DocumentData[]>();
-
   React.useEffect(() => {
     const fetchData = async () => {
       db.collection("users").onSnapshot((user) => {
@@ -27,6 +26,7 @@ const UserSection: React.SFC<UserSectionProps> = () => {
       {users?.map((us) => {
         return (
           <User
+            key={us.id}
             user={us.user}
             userDescription={us.userDescription}
             userName={us.userName}
@@ -34,6 +34,9 @@ const UserSection: React.SFC<UserSectionProps> = () => {
           />
         );
       })}
+      <footer>
+        <small>Busca un usuario en: Perfil </small>
+      </footer>
     </div>
   );
 };

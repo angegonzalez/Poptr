@@ -49,14 +49,11 @@ const NavBar: React.SFC<RouteComponentProps> = props => {
           </li>
           <li className="nav-item">
             <NavLink
-              to="/messages"
+              to="/profile"
               className="nav-link"
               activeClassName="nav-item"
             >
-              Mensajes
-              <span className="badge badge-light" style={{ marginLeft: "5px" }}>
-                1
-              </span>
+              Perfil
             </NavLink>
           </li>
           <li className="nav-item">

@@ -1,64 +1,62 @@
 
-export class LinkedListNode <T> {
-    data: T 
+export class LinkedListNode<T> {
+    data: T
     next: LinkedListNode<T> | null
 
-    constructor(data: T){
-        this.data= data;
-        this.next= null;
+    constructor(data: T) {
+        this.data = data;
+        this.next = null;
     }
 }
 export class LinkedList<T>{
-    private head: LinkedListNode<T> | null ;
-    private tail: LinkedListNode<T> | null ;
+    private head: LinkedListNode<T> | null;
+    private tail: LinkedListNode<T> | null;
 
-    constructor(){
-        this.head= null;
-        this.tail= null;
+    constructor() {
+        this.head = null;
+        this.tail = null;
     }
 
     public pushFront = (data: T) => {
         const node = new LinkedListNode(data)
         node.next = this.head
-        this.head= node
-        if(this.tail === null){
-            this.tail= this.head
-        }   
+        this.head = node
+        if (this.tail === null) {
+            this.tail = this.head
+        }
     }
 
     public pushBack = (data: T) => {
         const node = new LinkedListNode(data)
-        if(this.tail === null){
-            this.head= node
-            this.tail= node
+        if (this.tail === null) {
+            this.head = node
+            this.tail = node
         }
-        else{
-            this.tail.next= node
-            this.tail= node
+        else {
+            this.tail.next = node
+            this.tail = node
         }
     }
 
-    public *items(){
+    public *items() {
         let node = this.head;
-        while(node){
+        while (node) {
             yield node;
-            node= node.next
+            node = node.next
         }
     }
 
-    public map( callbackFunction: Function ){
-        let itemtoR =[];
-        let iterator = this.items();
-        while(true){
-            let item = iterator.next();
-            if(item.done) break;
-            else{
-                itemtoR.push(callbackFunction(item.value.data))
+    public traverse() {
+        if (this.head === null) {
+            console.log("This list is empty")
+        }
+        else {
+            let node = this.head;
+            while (node !== null) {
+                console.log(node);
+                node = node.next!;
             }
         }
-        return itemtoR;
-
     }
-
 
 }

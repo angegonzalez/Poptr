@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 import Landing from "./components/Landing";
 import TransactionSection from "./components/TransactionsSection";
+import Profile from "./components/Profile";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBUKo-7_RNCanGw1_EtGc8bejX5Hk2-Gag",
@@ -23,6 +24,8 @@ const firebaseConfig = {
   appId: "1:626239018121:web:4299c3f1875e764e21e258"
 };
 firebase.initializeApp(firebaseConfig);
+
+
 
 function App() {
   const [isLoggedIn, setLoggedIn] = React.useState(false);
@@ -48,6 +51,9 @@ function App() {
             </Route>
             <Route exact={true} path="/transactions">
               {isLoggedIn ? <TransactionSection/> : <Redirect to="/app" />}
+            </Route>
+            <Route exact={true} path="/profile">
+              {isLoggedIn ? <Profile/> : <Redirect to="/app" />}
             </Route>
           </Switch>
         </>

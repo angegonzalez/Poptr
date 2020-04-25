@@ -8,10 +8,26 @@ import ReactCardFlip from "react-card-flip";
 import Toast from "react-bootstrap/Toast";
 import ToastHeader from "react-bootstrap/Toast";
 import ToastBody from "react-bootstrap/Toast";
+//import { testUsers10K, testUsers100K, testUsers500K, testUsers1M} from "../classes/Users.js";
 
 interface ILanding {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+//Data test in Landing page (Using Users Linked List )
+//Uncomment lines for make respective test and see result in console
+//Developed only for operations: 
+// 1. Fill the list O(1)
+// 2. Traverse the list O(n)
+
+//10.000
+  //testUsers10K()
+//100.000
+  //testUsers100K()
+//500.000
+  //testUsers500K()
+//1.000.000
+  // testUsers1M()
 
 const Landing: React.SFC<ILanding> = props => {
   const [cardsVisibility, setCards] = React.useState(false);

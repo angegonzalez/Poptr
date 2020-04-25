@@ -7,6 +7,8 @@ import $ from "jquery";
 import Modal from "react-bootstrap/Modal";
 import UserSection from "./UserSection";
 
+
+
 const NewsSection: React.SFC = () => {
   const [news, setNews] = React.useState<firebase.firestore.DocumentData[]>([]);
   const [userLoggedIn, setUserLoggedIn] = React.useState("");
@@ -76,7 +78,6 @@ const NewsSection: React.SFC = () => {
         });
     } else alert("No se ha cargado el usuario");
   };
-
   return (
     <>
       <div
@@ -184,10 +185,11 @@ const NewsSection: React.SFC = () => {
           </div>
         </div>
         <div className="col-lg-3">
-          <div className="trending-card mb-4" style={{ padding: "1rem", color: "white" }}>
-              <h5 className="mb-5" >
-                Trending 🔥
-              </h5>
+          <div
+            className="trending-card mb-4"
+            style={{ padding: "1rem", color: "white" }}
+          >
+            <h5 className="mb-5">Trending 🔥</h5>
           </div>
         </div>
       </div>
