@@ -1,6 +1,6 @@
 
 export class LinkedListNode<T> {
-    data: T
+    data: T | any;
     next: LinkedListNode<T> | null
 
     constructor(data: T) {
@@ -59,4 +59,86 @@ export class LinkedList<T>{
         }
     }
 
+   public search = (sdata :T) => {
+
+        let node = this.head;
+        while(node !== null){
+            if ((node.data.userName === sdata)||(node.data.userPhoto === sdata)||(node.data.userDescription === sdata)||(node.data.user === sdata)){
+                console.log("Data found");
+                console.log(node.data);
+                return node;
+            }
+            node = node.next!;
+        }
+        console.log("Data is not in the list");
+        return node;
+        
+        }
+        
+    public updateNode = (prevdata : T, newdata: T) => {
+        
+        let node = this.head;
+        while(node !== null){
+            if (node.data.userName === prevdata){
+                node.data.userName = newdata;
+                break;
+            }else if(node.data.userPhoto === prevdata){
+                node.data.userPhoto = newdata;
+                break;
+            }else if(node.data.userDescription === prevdata){
+                node.data.userDescription = newdata;
+                break;
+            }else if(node.data.user === prevdata){
+                node.data.user = newdata;
+                break;
+            }
+            node = node.next!;
+        }
+
+        if (node == null){
+            console.log("Data is not in the list");
+            return null;
+        } 
+        console.log("Data updated");
+            console.log(node);
+            return node; 
+    } 
+
+    public removeNode(index : number){
+
+        if(this.head === null || index < 0){
+            throw new RangeError('Index is not part of the list or the list does not exist');
+        }
+        if (index === 0){
+            const hdata = this.head.data;
+            this.head = this.head.next;
+            return hdata;
+        }
+
+        let curr = this.head;
+        let previous = this.head;
+        let i = 0;
+        while((curr.next !== null) && (i<index)){
+            previous = curr; 
+            curr = curr.next;
+            i++;
+        }
+
+        if(curr !== null){
+            previous.next = curr.next;
+        }
+        console.log("Removed : ");
+        console.log(curr.data);
+        
+    }
+
+    public lenght(){
+        let count = 0;
+        let node = this.head;
+        while(node !== null){
+            count++;
+            node = node.next;
+        }
+        return count;
+    }
 }
