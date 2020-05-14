@@ -9,27 +9,32 @@ import Toast from "react-bootstrap/Toast";
 import ToastHeader from "react-bootstrap/Toast";
 import ToastBody from "react-bootstrap/Toast";
 //import { testUsers10K} from "../classes/Users.js";
+import { db } from "../App";
+import LandingNewsSection from "./LandingNewsSection";
 
 interface ILanding {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  setAdminLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  updateInfo: boolean;
+
 }
 
 //Data test in Landing page (Using Users Linked List )
 //Uncomment lines for make respective test and see result in console
-//Developed only for operations: 
+//Developed only for operations:
 // 1. Fill the list O(1)
 // 2. Traverse the list O(n)
 
 //10.000
- // testUsers10K()
+// testUsers10K()
 //100.000
-  //testUsers100K()
+//testUsers100K()
 //500.000
-  //testUsers500K()
+//testUsers500K()
 //1.000.000
-  // testUsers1M()
+// testUsers1M()
 
-const Landing: React.SFC<ILanding> = props => {
+const Landing: React.SFC<ILanding> = (props) => {
   const [cardsVisibility, setCards] = React.useState(false);
   const [userName, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -43,27 +48,70 @@ const Landing: React.SFC<ILanding> = props => {
   const [ocupationDescription, setOcupationDescription] = React.useState("");
   const [userNameRegister, setUserNameRegister] = React.useState("");
   const [showToast, setShowToast] = React.useState(false);
-  const doLogin = () => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(userName, password)
-      .then(() => {
-        props.setLoggedIn(true);
-      })
-      .catch(err => {
-        alert("Se produjo el siguiente error al intentar iniciar: " + err);
+  const [users, setUsers] = React.useState<firebase.firestore.DocumentData[]>();
+  const [showUpdatedInfoToast, setshowUpdatedInfoToast] = React.useState(
+    props.updateInfo
+  );
+
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      db.collection("users_admin").onSnapshot((user) => {
+        const data = user.docs.map((doc) => doc.data());
+        for (let i = 0; i < data.length; i += 1) {
+          Object.defineProperty(data[i], "id", {
+            value: user.docs[i].id,
+          });
+        }
+        setUsers(data);
       });
+    };
+    fetchData();
+  }, []);
+
+  const doLogin = () => {
+    let flag = true;
+    if (flag) {
+      users!.map((user) => {
+        if (user.user === userName) {
+          console.log("El usuario es: " + userName);
+          flag = false;
+          firebase
+            .auth()
+            .signInWithEmailAndPassword(userName, password)
+            .then(() => {
+              props.setAdminLoggedIn(true);
+            })
+            .catch((err) => {
+              alert(
+                "Se produjo el siguiente error al intentar iniciar: " + err
+              );
+            });
+        }
+      });
+    }
+    if (flag) {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(userName, password)
+        .then(() => {
+          props.setLoggedIn(true);
+        })
+        .catch((err) => {
+          alert("Se produjo el siguiente error al intentar iniciar: " + err);
+        });
+    }
   };
 
   const doRegister = () => {
     firebase
-    .auth()
-    .createUserWithEmailAndPassword(emailRegister, passwordRegister)
+      .auth()
+      .createUserWithEmailAndPassword(emailRegister, passwordRegister);
     let data = {
       user: emailRegister,
       userDescription: ocupation + " " + ocupationDescription + " en " + place,
       userName: userNameRegister,
-      userPhoto: "https://image.flaticon.com/icons/svg/1226/1226097.svg"
+      userPhoto: "https://image.flaticon.com/icons/svg/1226/1226097.svg",
     };
 
     firebase
@@ -77,8 +125,7 @@ const Landing: React.SFC<ILanding> = props => {
     <>
       <div className="container-fluid login">
         <div className="row" style={{ marginTop: "7%", marginBottom: "7%" }}>
-          <div className="col-1"></div>
-          <div className="col-lg-4 col-sm-10">
+          <div className="col-lg-4 col-sm-10 ml-4 mr-4">
             <div className="login-card-bg">
               <div className="login-card">
                 <ReactCardFlip isFlipped={flipped}>
@@ -92,7 +139,7 @@ const Landing: React.SFC<ILanding> = props => {
                           className="form-control"
                           aria-describedby="emailHelp"
                           placeholder="Tu correo electrónico 📧"
-                          onChange={e => {
+                          onChange={(e) => {
                             setUserName(e.target.value);
                           }}
                         />
@@ -102,7 +149,7 @@ const Landing: React.SFC<ILanding> = props => {
                           type="password"
                           className="form-control"
                           placeholder="Tu contraseña 🔑"
-                          onChange={e => {
+                          onChange={(e) => {
                             setPassword(e.target.value);
                           }}
                         />
@@ -142,7 +189,7 @@ const Landing: React.SFC<ILanding> = props => {
                           className="form-control"
                           id="txtUserEmail"
                           placeholder="Tu correo electrónico 📧"
-                          onChange={e => setEmailRegister(e.target.value)}
+                          onChange={(e) => setEmailRegister(e.target.value)}
                         />
                       </div>
                       <div className="form-group">
@@ -153,7 +200,7 @@ const Landing: React.SFC<ILanding> = props => {
                           className="form-control"
                           id="txtUserPassword"
                           placeholder="Tu contraseña 🔑"
-                          onChange={e => setPasswordRegister(e.target.value)}
+                          onChange={(e) => setPasswordRegister(e.target.value)}
                         />
                         <small>Nunca se la digas a nadie 🤫</small>
                       </div>
@@ -164,7 +211,7 @@ const Landing: React.SFC<ILanding> = props => {
                           type="text"
                           className="form-control"
                           id="txtUserName"
-                          onChange={e => setUserNameRegister(e.target.value)}
+                          onChange={(e) => setUserNameRegister(e.target.value)}
                         />
                       </div>
                       <div className="form-check form-check-inline">
@@ -206,7 +253,7 @@ const Landing: React.SFC<ILanding> = props => {
                           type="text"
                           className="form-control"
                           id="txtUserPlace"
-                          onChange={e => setPlace(e.target.value)}
+                          onChange={(e) => setPlace(e.target.value)}
                         />
                       </div>
 
@@ -216,7 +263,7 @@ const Landing: React.SFC<ILanding> = props => {
                           type="text"
                           className="form-control"
                           id="txtUserPosition"
-                          onChange={e =>
+                          onChange={(e) =>
                             setOcupationDescription(e.target.value)
                           }
                         />
@@ -247,9 +294,22 @@ const Landing: React.SFC<ILanding> = props => {
               </div>
             </div>
           </div>
-          <div className="col-lg-3" />
-
           <div className=" col-lg-3 col-sm-10">
+            <Toast
+              onClose={() => setshowUpdatedInfoToast(false)}
+              show={showUpdatedInfoToast}
+              delay={5000}
+              autohide
+              style={{ marginTop: 20, marginLeft: 10 }}
+            >
+              <Toast.Header>
+                <strong className="mr-auto">Poptr</strong>
+                <small>just now</small>
+              </Toast.Header>
+              <Toast.Body>
+                Has actualizado la información correctamente 🙋🏼‍♂️👌🏼
+              </Toast.Body>
+            </Toast>
             <Toast
               onClose={() => setShowToast(false)}
               show={showToast}
@@ -265,6 +325,9 @@ const Landing: React.SFC<ILanding> = props => {
                 Tu registro se ha completado: pulsa en volver e inicia sesión 🚀
               </Toast.Body>
             </Toast>
+          </div>
+          <div className="col-lg-4 col-sm-12">
+            <LandingNewsSection />
           </div>
         </div>
       </div>

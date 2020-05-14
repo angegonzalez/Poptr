@@ -34,9 +34,6 @@ const UserSection: React.SFC<UserSectionProps> = () => {
           />
         );
       })}
-      <footer>
-        <small>Busca un usuario en: Perfil </small>
-      </footer>
     </div>
   );
 };

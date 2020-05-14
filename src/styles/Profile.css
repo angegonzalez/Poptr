@@ -1,0 +1,11 @@
+.user-card{
+    box-shadow: 2px 4px 8px 1px rgba(46, 61, 73, 0.2);
+    border-radius: 10px;
+    border:none;
+    padding: 2rem;
+}
+.user-card >h3{
+    background: linear-gradient(to left, #ff5e62, #ff9966);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

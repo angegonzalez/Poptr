@@ -1,0 +1,123 @@
+[33mcommit 8cc153d3768f3d6cf99580cab3e7697e8b3b0873[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Angel <angegonzalez@unal.edu.co>
+Date:   Wed May 13 21:55:05 2020 -0500
+
+    Nuevo diseño y organizacion
+
+[33mcommit c992d71bcde9afe823cd303432a94b00bab79995[m
+Author: Angel González <angegonzalez@unal.edu.co>
+Date:   Wed May 13 21:40:19 2020 -0500
+
+    Cambios en diseño y organizacion
+
+[33mcommit 240db69f133fbfc417f0fde5722bfc8b1acf01fc[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Angel <angegonzalez@unal.edu.co>
+Date:   Wed Apr 29 18:06:51 2020 -0500
+
+    Agrega documentos
+
+[33mcommit d6a66069ea5c23a5c7732d75e4c186853a4c47f0[m
+Author: Angel <angegonzalez@unal.edu.co>
+Date:   Mon Apr 27 23:40:30 2020 -0500
+
+    Commit final: Primera entrega
+
+[33mcommit 115beb23ceb119ae37780699003e6b507ff45f24[m
+Author: Angel González <52757506+angegonzalez@users.noreply.github.com>
+Date:   Sat Apr 25 14:49:29 2020 -0500
+
+    Update README.md
+
+[33mcommit b1bd7abc1cf8364883841554f663ca85673298e6[m
+Author: Angel <angegonzalez@unal.edu.co>
+Date:   Sat Apr 25 14:43:05 2020 -0500
+
+    April 25
+
+[33mcommit bb41dd9cfd5d9e604f4770c8127b360d89c93668[m
+Author: Angel <angegonzalez@unal.edu.co>
+Date:   Sun Apr 19 17:50:42 2020 -0500
+
+    April 19 commit 2
+
+[33mcommit cc990e86986c774379156fb53797cb3b6e44b67b[m
+Author: Angel <angegonzalez@unal.edu.co>
+Date:   Sun Apr 19 15:10:12 2020 -0500
+
+    April 19
+
+[33mcommit 5cf8128b9306c779c237a57392835d216bac9c58[m
+Merge: a1f0de5 342c8cd
+Author: Angel <angegonzalez@unal.edu.co>
+Date:   Thu Apr 16 11:34:33 2020 -0500
+
+    Merge branch 'master' of https://github.com/angegonzalez/Poptr
+
+[33mcommit a1f0de546946218e2974ff95c3d0ff25016c35b7[m
+Author: Angel <angegonzalez@unal.edu.co>
+Date:   Thu Apr 16 11:34:29 2020 -0500
+
+    April 16
+    
+    Changing project orientation.
+
+[33mcommit 342c8cd5c829259924a06478953c7b45ce1aacaa[m
+Author: Angel González <52757506+angegonzalez@users.noreply.github.com>
+Date:   Thu Apr 16 11:33:21 2020 -0500
+
+    Update README.md
+    
+    Make some changes for project orientation.
+
+[33mcommit 4046e1fcd4c82d518df8bbdd8b677958b38dbe44[m
+Author: Angel <angegonzalez@unal.edu.co>
+Date:   Sun Mar 29 20:36:53 2020 -0500
+
+    Register completed
+    
+    Register in app function completed and firebase unified.
+
+[33mcommit 772dab557dfaea631eec22a64181d27ca65d28f7[m
+Author: Angel <angegonzalez@unal.edu.co>
+Date:   Sat Mar 28 00:57:13 2020 -0500
+
+    News updated
+
+[33mcommit d683c5e2361d633c81416d12d7a184de8e03296c[m
+Author: Angel <angegonzalez@unal.edu.co>
+Date:   Thu Mar 26 18:55:05 2020 -0500
+
+    Comments finished
+    
+    Users finished
+
+[33mcommit c93708e704a8819cc4686fbdf7fb1f05c1eba536[m
+Author: Angel <angegonzalez@unal.edu.co>
+Date:   Wed Mar 25 21:30:23 2020 -0500
+
+    Login done
+    
+    Added login without sign up
+    for test use:
+    USER: admin@admin.com
+    PASS: admin1234
+
+[33mcommit 1aa317a4f3951f642edbcc25524c85441b2dd5a8[m
+Author: Angel <angegonzalez@unal.edu.co>
+Date:   Wed Mar 25 00:48:08 2020 -0500
+
+    Landing page added
+
+[33mcommit 2553e87c5bac96d5b17b2842d9ca3b80a6320e15[m
+Author: Angel <angegonzalez@unal.edu.co>
+Date:   Tue Mar 24 13:31:42 2020 -0500
+
+    Poptr
+    
+    New Popter commit
+
+[33mcommit 8f7c96da0c9cc85c0349d5b18f48f827ab6beab3[m
+Author: Angel <angegonzalez@unal.edu.co>
+Date:   Mon Mar 23 16:54:30 2020 -0500
+
+    Initialize project using Create React App

@@ -6,15 +6,29 @@ import * as firebase from "firebase";
 import $ from "jquery";
 import Modal from "react-bootstrap/Modal";
 import UserSection from "./UserSection";
+import Toast from "react-bootstrap/Toast";
 
+interface hashTagData {
+  hashTag: string;
+  count: number;
+}
 
+interface NewsSectionProps {
+  setUpdateInfo: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-const NewsSection: React.SFC = () => {
+const NewsSection: React.SFC<NewsSectionProps> = (props) => {
+  props.setUpdateInfo(false);
   const [news, setNews] = React.useState<firebase.firestore.DocumentData[]>([]);
   const [userLoggedIn, setUserLoggedIn] = React.useState("");
   const [userPhoto, setUserPhoto] = React.useState("");
   const [showModal, setShowModal] = React.useState(false);
   const [createdNew, setCreatedNew] = React.useState("");
+  const [showToastNew, setshowToastNew] = React.useState(false);
+
+  let trendingList: string[] = [];
+  let hashTagArray: string[] = [];
+  let trendingArray: hashTagData[] = [];
 
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
@@ -66,6 +80,7 @@ const NewsSection: React.SFC = () => {
         userDescription: userDescription,
         userName: userLoggedIn,
         userPhoto: userPhoto,
+        likes: 0,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       };
       firebase
@@ -76,21 +91,75 @@ const NewsSection: React.SFC = () => {
         .then(() => {
           console.log("Data recorded in Database");
         });
+      setshowToastNew(true);
     } else alert("No se ha cargado el usuario");
   };
+
+  const getTrending = () => {
+    news.map((notice) => {
+      const charArray: [] = notice.newDescription.split("");
+      charArray.map((word, index) => {
+        if (word === "#") {
+          let tempIndex = index + 1;
+          let hashTag = "#";
+          while (charArray[tempIndex] !== " ") {
+            if (tempIndex === charArray.length) break;
+            else {
+              hashTag += charArray[tempIndex];
+              tempIndex += 1;
+            }
+          }
+          if (hashTag !== "#") hashTagArray.push(hashTag);
+        }
+      });
+    });
+  };
+
+  const getTopTrending = () => {
+    getTrending();
+    for (let i = 0; i < hashTagArray.length; i += 1) {
+      let count = 1;
+      for (let j = i + 1; j < hashTagArray.length; j += 1) {
+        if (hashTagArray[i] === hashTagArray[j]) {
+          count += 1;
+          hashTagArray.splice(j, 1);
+        }
+      }
+      let hashTag = {
+        hashTag: hashTagArray[i],
+        count: count,
+      };
+      trendingArray.push(hashTag);
+    }
+
+    trendingArray.sort((a, b) => {
+      if (b.count > a.count) {
+        return 1;
+      }
+      if (b.count < a.count) {
+        return -1;
+      }
+      return 0;
+    });
+
+    if (trendingArray.length !== 0) {
+      for (let i = 0; i < 3; i += 1) {
+        trendingList.push(trendingArray[i].hashTag);
+      }
+    }
+  };
+  getTopTrending();
   return (
     <>
       <div
         className="row mb-3 mr-2 ml-2 mt-4
       "
       >
-        <div className="col-lg-3">
-          <UserSection></UserSection>
-        </div>
-        <div className="col-md-8 col-sm-10 col-lg-6">
-          <div className="container-fluid news_section mb-3">
+        <div className="col-md-8 col-sm-12 col-lg-8 col-xl-5">
+          <div className="container news_section mb-3">
             <h2 className=" mt-2 mb-2" style={{ textAlign: "center" }}>
               Publicaciones
+              <span className="badge badge-dark ml-2"> {news.length}</span>
             </h2>
             <div className="create-new mt-4 mb-4 ml-3 mr-3">
               <div className="media">
@@ -172,6 +241,7 @@ const NewsSection: React.SFC = () => {
                     newDescription={el.newDescription}
                     userPhotoLoggedIn={userPhoto}
                     userPhotoNew={el.userPhoto}
+                    likes={el.likes}
                     comments={el.comments}
                   ></New>
                 );
@@ -179,17 +249,61 @@ const NewsSection: React.SFC = () => {
             ) : (
               <></>
             )}
+
             <footer>
               <small>Desarrollado con ♥ por: Angel Mateo Gonzalez ✈</small>
             </footer>
           </div>
         </div>
-        <div className="col-lg-3">
+        <div className="new-notification d-none d-xl-block">
+          <Toast
+            onClose={() => setshowToastNew(false)}
+            show={showToastNew}
+            delay={4000}
+            autohide
+          >
+            <Toast.Header>
+              <strong className="mr-auto">Poptr</strong>
+              <small>just now</small>
+            </Toast.Header>
+            <Toast.Body>
+              Has hecho una publicación 🔥🔥 , revisa la sección de
+              publicaciones
+            </Toast.Body>
+          </Toast>
+        </div>
+        <div className="d-none d-xl-block">
+          <div
+            className="trending-card-lg mb-4"
+            style={{ padding: "1rem", color: "white" }}
+          >
+            <h5>Trending 🔥</h5>
+            <div className="trending-card-body">
+              {trendingList.map((hashtag, index) => {
+                return (
+                  <div className="trending-item" key={index}>
+                    <code className="mt-0">{hashtag}</code>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+        <div className="col-sm-12 col-xs-12 d-none d-sm-block d-md-none">
           <div
             className="trending-card mb-4"
             style={{ padding: "1rem", color: "white" }}
           >
-            <h5 className="mb-5">Trending 🔥</h5>
+            <h5>Trending 🔥</h5>
+            <div className="trending-card-body">
+              {trendingList.map((hashtag, index) => {
+                return (
+                  <div className="trending-item" key={index}>
+                    <code className="mt-0">{hashtag}</code>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

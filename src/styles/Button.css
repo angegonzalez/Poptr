@@ -1,0 +1,23 @@
+.main-button{
+    color: rgb(78, 76, 72);
+    text-align: center;
+    height: 40px;
+    border: gray solid 1px;
+    border-radius: 3px;
+    max-width: 200px;
+}
+.main-button >span{
+    line-height: 35px;
+}
+.main-button:hover{
+    transition: all ease 0.3s;
+    cursor: pointer;
+    text-align: center;
+    background: linear-gradient(to left, #fdc830, #f37335); 
+    color: white;
+    border: none;
+ 
+}
+.main-button:hover >span{
+    font-weight: bold;
+}

@@ -9,8 +9,8 @@ export class LinkedListNode<T> {
     }
 }
 export class LinkedList<T>{
-    private head: LinkedListNode<T> | null;
-    private tail: LinkedListNode<T> | null;
+    public head: LinkedListNode<T> | null;
+    public tail: LinkedListNode<T> | null;
 
     constructor() {
         this.head = null;

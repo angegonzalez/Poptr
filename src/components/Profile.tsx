@@ -3,15 +3,15 @@ import { db } from "../App";
 import User, { UserProps } from "./User";
 import firebase from "firebase";
 import { cleanup } from "@testing-library/react";
+import Button from "./Button";
+import "../styles/Profile.css";
 
-export interface ProfileProps {}
+export interface ProfileProps {
+  doUpdateProfile: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-const Profile: React.SFC<ProfileProps> = () => {
-  const [userSearch, setuserSearch] = React.useState("");
-  const [userShow, setuserShow] = React.useState<
-    firebase.firestore.DocumentData
-  >({});
-  const [userFlag, setuserFlag] = React.useState(false);
+const Profile: React.SFC<ProfileProps> = (props) => {
   const [users, setUsers] = React.useState<firebase.firestore.DocumentData[]>();
   let userSignedInInfo: firebase.firestore.DocumentData = {};
   const loggedUser = firebase.auth().currentUser!.email;
@@ -21,38 +21,22 @@ const Profile: React.SFC<ProfileProps> = () => {
   const [userDescriptionUpdate, setuserDescriptionUpdate] = React.useState("");
   const [userPhotoUpdate, setuserPhotoUpdate] = React.useState("");
 
-  React.useEffect(()  => {
+  React.useEffect(() => {
     const fetchData = async () => {
-      db.collection("users").get().then((user) => {
-        const data = user.docs.map((doc) => doc.data());
-        for (let i = 0; i < data.length; i += 1) {
-          Object.defineProperty(data[i], "id", {
-            value: user.docs[i].id,
-          });
-        }
-        setUsers(data);
-      }); 
+      db.collection("users")
+        .get()
+        .then((user) => {
+          const data = user.docs.map((doc) => doc.data());
+          for (let i = 0; i < data.length; i += 1) {
+            Object.defineProperty(data[i], "id", {
+              value: user.docs[i].id,
+            });
+          }
+          setUsers(data);
+        });
     };
     fetchData();
-
   }, []);
-
-  const searchUser = () => {
-    users!.map((us) => {
-      if (us.user === userSearch) {
-        setuserShow(us);
-      }
-    });
-    if (userShow !== null) {
-      setuserFlag(true);
-    }
-  };
-
-  const handleEnterUser = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      searchUser();
-    }
-  };
 
   const getUserInfo = () => {
     users!.map((us) => {
@@ -63,54 +47,30 @@ const Profile: React.SFC<ProfileProps> = () => {
   };
   const updateUser = () => {
     let userRef = db.collection("users").doc(userSignedInInfo.id);
-    let updatedUser: any = {}
-    if(userNameUpdate !== "")  updatedUser.userName = userNameUpdate
-    else updatedUser.userName= userSignedInInfo.userName
-    if(userDescriptionUpdate !== "")  updatedUser.userDescription = userDescriptionUpdate
-    else updatedUser.userDescription= userSignedInInfo.userDescription
-    if(userPhotoUpdate !== "")  updatedUser.userPhoto = userPhotoUpdate
-    else updatedUser.userPhoto= userSignedInInfo.userPhoto
+    let updatedUser: any = {};
+    if (userNameUpdate !== "") updatedUser.userName = userNameUpdate;
+    else updatedUser.userName = userSignedInInfo.userName;
+    if (userDescriptionUpdate !== "")
+      updatedUser.userDescription = userDescriptionUpdate;
+    else updatedUser.userDescription = userSignedInInfo.userDescription;
+    if (userPhotoUpdate !== "") updatedUser.userPhoto = userPhotoUpdate;
+    else updatedUser.userPhoto = userSignedInInfo.userPhoto;
 
-    userRef.update(updatedUser)
-    .then(() => console.log("Actualizado con exito"))
-    .catch(() => console.log("Ocurrio un error al actualizar"));
+    userRef
+      .update(updatedUser)
+      .then(() => props.doUpdateProfile(true))
+      .catch(() => console.log("Ocurrio un error al actualizar"));
+    props.doUpdateProfile(true);
+    props.setLoggedIn(false);
   };
 
   return (
     <>
       <div className="row mb-3 mr-2 ml-2 mt-4">
-        <div className="col-4">
-          <div className="user-card mb-4" style={{ padding: "1rem" }}>
-            <h5>Buscar un usuario:</h5>
-            <input
-              type="text"
-              className="form-control"
-              id="search-user"
-              placeholder="Escribe un correo de usuario"
-              aria-label="Username"
-              aria-describedby="basic-addon1"
-              onChange={(e) => {
-                setuserSearch(e.target.value);
-              }}
-              onKeyPress={(e) => handleEnterUser(e)}
-            />
-            <small>Presiona enter ➡ para buscar un usuario</small>
-            {userFlag ? (
-              <User
-                user={userShow.user}
-                userDescription={userShow.userDescription}
-                userName={userShow.userName}
-                userPhoto={userShow.userPhoto}
-              />
-            ) : (
-              <p className="font-weight-bold">No se ha encontrado el usuario</p>
-            )}
-          </div>
-        </div>
-        {users ? getUserInfo() : console.log(users)}
-        <div className="col-4">
-          <div className="user-card mb-4" style={{ padding: "1rem" }}>
-            <h5>Perfil</h5>
+        {users ? getUserInfo() : null}
+        <div className="col-xl-4 col-sm-9">
+          <div className="user-card mb-4">
+            <h3 className="font-weight-bold">Perfil</h3>
             <form>
               <div className="form-row">
                 <div className="form-group col-md-6">
@@ -145,26 +105,25 @@ const Profile: React.SFC<ProfileProps> = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="inputUserPhoto">URL de la foto</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="inputUserPhoto"
-                  defaultValue={userSignedInInfo.userPhoto || ""}
-                  onChange={(e) => setuserPhotoUpdate(e.target.value)}
-                />
-              </div>
-              <div className="form-group row">
-                <div className="col-sm-10">
-                  <button
-                    type="button"
-                    className="btn btn-dark"
-                    onClick={updateUser}
-                  >
-                    Confirmar
-                  </button>
+                <div className="row">
+                  <div className="col-2">
+                    <img src={userSignedInInfo.userPhoto} alt="..." width="45px"/>
+                  </div>
+                  <div className="col-10">
+                    <input
+                      type="text"
+                      className="form-control mt-1"
+                      id="inputUserPhoto"
+                      defaultValue={userSignedInInfo.userPhoto || ""}
+                      onChange={(e) => setuserPhotoUpdate(e.target.value)}
+                    />
+                  </div>
                 </div>
               </div>
             </form>
+            <div className="button-submit">
+              <Button name="Confirmar" action={updateUser}></Button>
+            </div>
           </div>
         </div>
       </div>

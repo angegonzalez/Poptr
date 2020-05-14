@@ -50,15 +50,17 @@ const Transaction: React.SFC<TransactionProps> = (props) => {
                   </Modal.Header>
                   <Modal.Body>
                     <p className="mb-0">{props.transactionDescription}</p>
-                    <p className="font-weight-bold">Los documentos que necesitas en este trámite son: </p>
+                    <p className="font-weight-bold">
+                      Los documentos que necesitas en este trámite son:{" "}
+                    </p>
                     <ul className="list-group">
-                      {
-                        props.documents.map( doc => {
-                          return(
-                            <li className="mb-0 list-group-item">{doc}</li>
-                          )
-                        })
-                      }
+                      {props.documents.map((doc, index) => {
+                        return (
+                          <li className="mb-0 list-group-item" key={index}>
+                            {doc}
+                          </li>
+                        );
+                      })}
                     </ul>
                   </Modal.Body>
                   <Modal.Footer></Modal.Footer>
