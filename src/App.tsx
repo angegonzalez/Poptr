@@ -29,16 +29,13 @@ firebase.initializeApp(firebaseConfig);
 function App() {
   const [isLoggedIn, setLoggedIn] = React.useState(false);
   const [isAdminLoggedIn, setAdminLoggedIn] = React.useState(false);
-  const [doUpdateInfo, setdoUpdateInfo] = React.useState(false);
+  const [updatedUserInfo, setupdatedUserInfo] = React.useState(false);
   return (
     <>
       <Router>
         <NavBar />
         <>
           <Switch>
-            {doUpdateInfo ? (
-              <Redirect   exact={true} path="/profile" to="/app"></Redirect>
-            ) : null}
             {isLoggedIn && !isAdminLoggedIn ? (
               <Redirect exact={true} path="/app" to="/home"></Redirect>
             ) : null}
@@ -54,13 +51,12 @@ function App() {
                   {...props}
                   setLoggedIn={setLoggedIn}
                   setAdminLoggedIn={setAdminLoggedIn}
-                  updateInfo={doUpdateInfo}
                 />
               )}
             ></Route>
             <Route exact={true} path="/home">
               {isLoggedIn ? (
-                <NewsSection setUpdateInfo={setdoUpdateInfo} />
+                <NewsSection updatedUserInfo ={updatedUserInfo}/>
               ) : (
                 <Redirect to="/app" />
               )}
@@ -69,14 +65,7 @@ function App() {
               {isLoggedIn ? <TransactionSection /> : <Redirect to="/app" />}
             </Route>
             <Route exact={true} path="/profile">
-              {isLoggedIn ? (
-                <Profile
-                  doUpdateProfile={setdoUpdateInfo}
-                  setLoggedIn={setLoggedIn}
-                />
-              ) : (
-                <Redirect to="/app" />
-              )}
+              {isLoggedIn ? <Profile setupdatedUserInfo={setupdatedUserInfo} /> : <Redirect to="/app" />}
             </Route>
 
             <Route exact={true} path="/admin">

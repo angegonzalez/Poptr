@@ -11,12 +11,11 @@ import ToastBody from "react-bootstrap/Toast";
 //import { testUsers10K} from "../classes/Users.js";
 import { db } from "../App";
 import LandingNewsSection from "./LandingNewsSection";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
 interface ILanding {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   setAdminLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-  updateInfo: boolean;
-
 }
 
 //Data test in Landing page (Using Users Linked List )
@@ -34,8 +33,7 @@ interface ILanding {
 //1.000.000
 // testUsers1M()
 
-const Landing: React.SFC<ILanding> = (props) => {
-  const [cardsVisibility, setCards] = React.useState(false);
+const Landing: React.SFC<ILanding & RouteComponentProps> = (props) => {
   const [userName, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [flipped, setFlipped] = React.useState(false);
@@ -49,9 +47,6 @@ const Landing: React.SFC<ILanding> = (props) => {
   const [userNameRegister, setUserNameRegister] = React.useState("");
   const [showToast, setShowToast] = React.useState(false);
   const [users, setUsers] = React.useState<firebase.firestore.DocumentData[]>();
-  const [showUpdatedInfoToast, setshowUpdatedInfoToast] = React.useState(
-    props.updateInfo
-  );
 
 
   React.useEffect(() => {
@@ -272,8 +267,8 @@ const Landing: React.SFC<ILanding> = (props) => {
                       <div className="form-row mt-4">
                         <div className="form-group col-sm-12 col-md-12 col-md-12 col-lg-6">
                           <button
-                            type="submit"
                             className="btn btn-dark btn-block"
+                            onClick= { () => props.history.push('/')}
                           >
                             Volver ⬅
                           </button>
@@ -295,21 +290,6 @@ const Landing: React.SFC<ILanding> = (props) => {
             </div>
           </div>
           <div className=" col-lg-3 col-sm-10">
-            <Toast
-              onClose={() => setshowUpdatedInfoToast(false)}
-              show={showUpdatedInfoToast}
-              delay={5000}
-              autohide
-              style={{ marginTop: 20, marginLeft: 10 }}
-            >
-              <Toast.Header>
-                <strong className="mr-auto">Poptr</strong>
-                <small>just now</small>
-              </Toast.Header>
-              <Toast.Body>
-                Has actualizado la información correctamente 🙋🏼‍♂️👌🏼
-              </Toast.Body>
-            </Toast>
             <Toast
               onClose={() => setShowToast(false)}
               show={showToast}
@@ -338,4 +318,4 @@ const Landing: React.SFC<ILanding> = (props) => {
   );
 };
 
-export default Landing;
+export default withRouter(Landing);

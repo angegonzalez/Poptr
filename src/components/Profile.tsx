@@ -5,13 +5,14 @@ import firebase from "firebase";
 import { cleanup } from "@testing-library/react";
 import Button from "./Button";
 import "../styles/Profile.css";
+import { RouteComponentProps, withRouter, Route } from "react-router-dom";
 
-export interface ProfileProps {
-  doUpdateProfile: React.Dispatch<React.SetStateAction<boolean>>;
-  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+interface ProfileProps{
+  setupdatedUserInfo: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Profile: React.SFC<ProfileProps> = (props) => {
+
+const Profile: React.SFC <RouteComponentProps & ProfileProps>  = (props) => {
   const [users, setUsers] = React.useState<firebase.firestore.DocumentData[]>();
   let userSignedInInfo: firebase.firestore.DocumentData = {};
   const loggedUser = firebase.auth().currentUser!.email;
@@ -22,6 +23,7 @@ const Profile: React.SFC<ProfileProps> = (props) => {
   const [userPhotoUpdate, setuserPhotoUpdate] = React.useState("");
 
   React.useEffect(() => {
+    props.setupdatedUserInfo(false);
     const fetchData = async () => {
       db.collection("users")
         .get()
@@ -58,10 +60,11 @@ const Profile: React.SFC<ProfileProps> = (props) => {
 
     userRef
       .update(updatedUser)
-      .then(() => props.doUpdateProfile(true))
+      .then(() => console.log('Usuario actualizado'))
       .catch(() => console.log("Ocurrio un error al actualizar"));
-    props.doUpdateProfile(true);
-    props.setLoggedIn(false);
+ 
+      props.history.push("/home");
+      props.setupdatedUserInfo(true);
   };
 
   return (
@@ -131,4 +134,4 @@ const Profile: React.SFC<ProfileProps> = (props) => {
   );
 };
 
-export default Profile;
+export default withRouter(Profile);

@@ -14,17 +14,19 @@ interface hashTagData {
 }
 
 interface NewsSectionProps {
-  setUpdateInfo: React.Dispatch<React.SetStateAction<boolean>>;
+  updatedUserInfo: boolean;
 }
 
 const NewsSection: React.SFC<NewsSectionProps> = (props) => {
-  props.setUpdateInfo(false);
   const [news, setNews] = React.useState<firebase.firestore.DocumentData[]>([]);
   const [userLoggedIn, setUserLoggedIn] = React.useState("");
   const [userPhoto, setUserPhoto] = React.useState("");
   const [showModal, setShowModal] = React.useState(false);
   const [createdNew, setCreatedNew] = React.useState("");
   const [showToastNew, setshowToastNew] = React.useState(false);
+  const [showUpdatedInfoToast, setshowUpdatedInfoToast] = React.useState(
+    props.updatedUserInfo
+  );
 
   let trendingList: string[] = [];
   let hashTagArray: string[] = [];
@@ -34,9 +36,11 @@ const NewsSection: React.SFC<NewsSectionProps> = (props) => {
   const handleShowModal = () => setShowModal(true);
 
   let userDescription = "";
+  let unsuscribe : () => void;
+
   React.useEffect(() => {
     const fetchData = async () => {
-      db.collection("news")
+      unsuscribe= db.collection("news")
         .orderBy("timestamp", "desc")
         .onSnapshot((doc) => {
           const data = doc.docs.map((doc) => doc.data());
@@ -49,6 +53,9 @@ const NewsSection: React.SFC<NewsSectionProps> = (props) => {
         });
     };
     fetchData();
+    return () =>{
+      unsuscribe()
+    }
   }, []);
   const getUser = () => {
     const loggedUser = firebase.auth().currentUser!.email;
@@ -254,6 +261,22 @@ const NewsSection: React.SFC<NewsSectionProps> = (props) => {
               <small>Desarrollado con ♥ por: Angel Mateo Gonzalez ✈</small>
             </footer>
           </div>
+        </div>
+        <div className="update-notification d-none d-xl-block">
+        <Toast
+            onClose={() => setshowUpdatedInfoToast(false)}
+            show={showUpdatedInfoToast}
+            delay={3000}
+            autohide  
+          >
+            <Toast.Header>
+              <strong className="mr-auto">Poptr</strong>
+              <small>just now</small>
+            </Toast.Header>
+            <Toast.Body>
+              Has actualizado la información correctamente 🙋🏼‍♂️👌🏼
+            </Toast.Body>
+          </Toast>
         </div>
         <div className="new-notification d-none d-xl-block">
           <Toast

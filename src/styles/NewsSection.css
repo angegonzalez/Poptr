@@ -64,3 +64,10 @@ footer {
   left: 75%;
   top: 68%;
 }
+.update-notification{
+  position: fixed;
+  height: 100%;
+  width: 350px;
+  left: 75%;
+  top: 70%;
+}
