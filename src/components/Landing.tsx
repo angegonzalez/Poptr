@@ -8,7 +8,13 @@ import ReactCardFlip from "react-card-flip";
 import Toast from "react-bootstrap/Toast";
 import ToastHeader from "react-bootstrap/Toast";
 import ToastBody from "react-bootstrap/Toast";
-//import { testUsers10K} from "../classes/Users.js";
+import {
+  //testTrendings10K,
+  //testTrendings100K, 
+  //testTrendings1M,
+  //testTrendings10M,
+  //testTrendings50M
+} from "../classes/Trendings.js";
 import { db } from "../App";
 import LandingNewsSection from "./LandingNewsSection";
 import { RouteComponentProps, withRouter } from "react-router-dom";
@@ -33,6 +39,19 @@ interface ILanding {
 //1.000.000
 // testUsers1M()
 
+// Test operation 2nd assignment
+// HashTags AVL Tree
+// 10.000
+// testTrendings10K();
+// 100.000
+// testTrendings100K();
+// 1.000.000
+// testTrendings1M();
+// 10.000.000
+// testTrendings10M();
+// 50.000.000
+// testTrendings50M();
+
 const Landing: React.SFC<ILanding & RouteComponentProps> = (props) => {
   const [userName, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -47,7 +66,6 @@ const Landing: React.SFC<ILanding & RouteComponentProps> = (props) => {
   const [userNameRegister, setUserNameRegister] = React.useState("");
   const [showToast, setShowToast] = React.useState(false);
   const [users, setUsers] = React.useState<firebase.firestore.DocumentData[]>();
-
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -268,7 +286,7 @@ const Landing: React.SFC<ILanding & RouteComponentProps> = (props) => {
                         <div className="form-group col-sm-12 col-md-12 col-md-12 col-lg-6">
                           <button
                             className="btn btn-dark btn-block"
-                            onClick= { () => props.history.push('/')}
+                            onClick={() => props.history.push("/")}
                           >
                             Volver ⬅
                           </button>

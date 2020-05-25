@@ -84,21 +84,12 @@ const New: React.SFC<NewProps> = (props) => {
 
   const getHashTags = () => {
     let hashTags: string[] = [];
-    const charArray = props.newDescription.split("");
-    charArray.map((word, index) => {
-      if (word === "#") {
-        let tempIndex = index + 1;
-        let hashTag = "#";
-        while (charArray[tempIndex] !== " ") {
-          if (tempIndex === charArray.length) break;
-          else {
-            hashTag += charArray[tempIndex];
-            tempIndex += 1;
-          }
-        }
-        if (hashTag !== "#") hashTags.push(hashTag);
+    const wordsArray = props.newDescription.split(" ");
+    wordsArray.map( word =>{
+      if(/^#/.test(word)){
+        hashTags.push(word)
       }
-    });
+    } )
     return hashTags;
   };
 

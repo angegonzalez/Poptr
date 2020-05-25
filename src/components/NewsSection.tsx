@@ -7,6 +7,7 @@ import $ from "jquery";
 import Modal from "react-bootstrap/Modal";
 import UserSection from "./UserSection";
 import Toast from "react-bootstrap/Toast";
+import { AVLTree } from "../classes/AVLTree";
 
 interface hashTagData {
   hashTag: string;
@@ -29,18 +30,21 @@ const NewsSection: React.SFC<NewsSectionProps> = (props) => {
   );
 
   let trendingList: string[] = [];
-  let hashTagArray: string[] = [];
   let trendingArray: hashTagData[] = [];
+  let hashTags: any = {};
 
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
 
+  let tree = new AVLTree<hashTagData>();
+
   let userDescription = "";
-  let unsuscribe : () => void;
+  let unsuscribe: () => void;
 
   React.useEffect(() => {
     const fetchData = async () => {
-      unsuscribe= db.collection("news")
+      unsuscribe = db
+        .collection("news")
         .orderBy("timestamp", "desc")
         .onSnapshot((doc) => {
           const data = doc.docs.map((doc) => doc.data());
@@ -53,9 +57,9 @@ const NewsSection: React.SFC<NewsSectionProps> = (props) => {
         });
     };
     fetchData();
-    return () =>{
-      unsuscribe()
-    }
+    return () => {
+      unsuscribe();
+    };
   }, []);
   const getUser = () => {
     const loggedUser = firebase.auth().currentUser!.email;
@@ -102,57 +106,30 @@ const NewsSection: React.SFC<NewsSectionProps> = (props) => {
     } else alert("No se ha cargado el usuario");
   };
 
-  const getTrending = () => {
+  const getHashtags = () => {
     news.map((notice) => {
-      const charArray: [] = notice.newDescription.split("");
-      charArray.map((word, index) => {
-        if (word === "#") {
-          let tempIndex = index + 1;
-          let hashTag = "#";
-          while (charArray[tempIndex] !== " ") {
-            if (tempIndex === charArray.length) break;
-            else {
-              hashTag += charArray[tempIndex];
-              tempIndex += 1;
-            }
+      const charArray: [] = notice.newDescription.split(" ");
+      for (let i = 0; i < charArray.length; i += 1) {
+        let ht = charArray[i];
+        if (/^#/.test(ht)) {
+          if (hashTags[ht] === undefined) {
+            hashTags[ht] = 1;
+          } else {
+            hashTags[ht] += 1;
           }
-          if (hashTag !== "#") hashTagArray.push(hashTag);
         }
-      });
+      }
     });
   };
 
   const getTopTrending = () => {
-    getTrending();
-    for (let i = 0; i < hashTagArray.length; i += 1) {
-      let count = 1;
-      for (let j = i + 1; j < hashTagArray.length; j += 1) {
-        if (hashTagArray[i] === hashTagArray[j]) {
-          count += 1;
-          hashTagArray.splice(j, 1);
-        }
-      }
-      let hashTag = {
-        hashTag: hashTagArray[i],
-        count: count,
+    getHashtags();
+    for (const hashtag in hashTags) {
+      const data: hashTagData = {
+        hashTag: hashtag,
+        count: hashTags[hashtag],
       };
-      trendingArray.push(hashTag);
-    }
-
-    trendingArray.sort((a, b) => {
-      if (b.count > a.count) {
-        return 1;
-      }
-      if (b.count < a.count) {
-        return -1;
-      }
-      return 0;
-    });
-
-    if (trendingArray.length !== 0) {
-      for (let i = 0; i < 3; i += 1) {
-        trendingList.push(trendingArray[i].hashTag);
-      }
+      tree.add(data);
     }
   };
   getTopTrending();
@@ -263,11 +240,11 @@ const NewsSection: React.SFC<NewsSectionProps> = (props) => {
           </div>
         </div>
         <div className="update-notification d-none d-xl-block">
-        <Toast
+          <Toast
             onClose={() => setshowUpdatedInfoToast(false)}
             show={showUpdatedInfoToast}
             delay={3000}
-            autohide  
+            autohide
           >
             <Toast.Header>
               <strong className="mr-auto">Poptr</strong>
@@ -302,7 +279,7 @@ const NewsSection: React.SFC<NewsSectionProps> = (props) => {
           >
             <h5>Trending 🔥</h5>
             <div className="trending-card-body">
-              {trendingList.map((hashtag, index) => {
+              {tree.getTop2().map((hashtag, index) => {
                 return (
                   <div className="trending-item" key={index}>
                     <code className="mt-0">{hashtag}</code>
@@ -319,7 +296,7 @@ const NewsSection: React.SFC<NewsSectionProps> = (props) => {
           >
             <h5>Trending 🔥</h5>
             <div className="trending-card-body">
-              {trendingList.map((hashtag, index) => {
+              {tree.getTop2().map((hashtag, index) => {
                 return (
                   <div className="trending-item" key={index}>
                     <code className="mt-0">{hashtag}</code>
