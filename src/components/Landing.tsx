@@ -8,13 +8,13 @@ import ReactCardFlip from "react-card-flip";
 import Toast from "react-bootstrap/Toast";
 import ToastHeader from "react-bootstrap/Toast";
 import ToastBody from "react-bootstrap/Toast";
-import {
+/*import {
   //testTrendings10K,
   //testTrendings100K, 
   //testTrendings1M,
   //testTrendings10M,
   //testTrendings50M
-} from "../classes/Trendings.js";
+} from "../classes/Trendings.js";*/
 import { db } from "../App";
 import LandingNewsSection from "./LandingNewsSection";
 import { RouteComponentProps, withRouter } from "react-router-dom";
