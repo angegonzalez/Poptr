@@ -1,5 +1,5 @@
 # Poptr 
-Una red social que permite la conexion entre usuarios que desean hacer los trámites de entidades publicas o provadas de una mejor forma, comunicandose con otras personas y haciendo una mejor gestion sobre sus tramites.
+Una red social que permite la conexion entre usuarios que desean hacer los trámites de entidades publicas o privadas de una mejor forma, comunicandose con otras personas y haciendo una mejor gestion sobre sus tramites.
 
 ### Proyecto: Estructuras de datos // UNAL 2020-I
 El proyecto contempla el uso de estructuras de datos, su implementacion y desarrrollo en las distintas operaciones de la red social
