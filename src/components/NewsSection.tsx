@@ -8,6 +8,10 @@ import Modal from "react-bootstrap/Modal";
 import UserSection from "./UserSection";
 import Toast from "react-bootstrap/Toast";
 import { AVLTree } from "../classes/AVLTree";
+import { Stack } from "../classes/Stack";
+import notificationsStack from "../classes/Tasks";
+import Button from "./Button";
+import Task from "./Task";
 
 interface hashTagData {
   hashTag: string;
@@ -16,6 +20,7 @@ interface hashTagData {
 
 interface NewsSectionProps {
   updatedUserInfo: boolean;
+  //notifications: Stack<JSX.Element>;
 }
 
 const NewsSection: React.SFC<NewsSectionProps> = (props) => {
@@ -28,9 +33,11 @@ const NewsSection: React.SFC<NewsSectionProps> = (props) => {
   const [showUpdatedInfoToast, setshowUpdatedInfoToast] = React.useState(
     props.updatedUserInfo
   );
+  const [test, settest] = React.useState(0);
+  const [testFlag, settestFlag] = React.useState(false);
 
-  let trendingList: string[] = [];
-  let trendingArray: hashTagData[] = [];
+  const [notifications, setnotifications] = React.useState(notificationsStack);
+
   let hashTags: any = {};
 
   const handleCloseModal = () => setShowModal(false);
@@ -57,6 +64,7 @@ const NewsSection: React.SFC<NewsSectionProps> = (props) => {
         });
     };
     fetchData();
+
     return () => {
       unsuscribe();
     };
@@ -132,13 +140,29 @@ const NewsSection: React.SFC<NewsSectionProps> = (props) => {
       tree.add(data);
     }
   };
+
   getTopTrending();
+
+  const notificationsLogic = () => {
+    notifications.pop();
+    setnotifications(notifications);
+  };
+
+  const doRender = () => {
+    if (notifications.isEmpty()) {
+      settestFlag(true);
+    } else {
+      settest(test + 1);
+      notificationsLogic();
+    }
+  };
   return (
     <>
       <div
         className="row mb-3 mr-2 ml-2 mt-4
       "
       >
+        <div className="col-1"></div>
         <div className="col-md-8 col-sm-12 col-lg-8 col-xl-5">
           <div className="container news_section mb-3">
             <h2 className=" mt-2 mb-2" style={{ textAlign: "center" }}>
@@ -237,6 +261,39 @@ const NewsSection: React.SFC<NewsSectionProps> = (props) => {
             <footer>
               <small>Desarrollado con ♥ por: Angel Mateo Gonzalez ✈</small>
             </footer>
+          </div>
+        </div>
+        <div className="notifications-stack d-none d-xl-block">
+          <div className="notifications-header">
+            <div className="row">
+              <div className="col-7">
+                <div className="media">
+                  <img
+                    src="https://image.flaticon.com/icons/svg/3003/3003961.svg"
+                    className="mr-3"
+                    alt="..."
+                  />
+                  <div className="media-body">
+                    <h6 className="mt-2 font-weight-bold">Tus objetivos</h6>
+                  </div>
+                </div>
+              </div>
+              <div className="col-5">
+                <Button name={"Quitar "} action={doRender}></Button>
+              </div>
+            </div>
+          </div>
+          <div className="notifications-body">
+            {!notifications.isEmpty() ? (
+              notifications.stack.getItems()
+            ) : (
+              <div className="notifications-done">
+                <Task
+                  name="¡Eso es todo!"
+                  description="Parece que completaste todos los objetivos 🎉. ¡Felicidades 🥳! "
+                />
+              </div>
+            )}
           </div>
         </div>
         <div className="update-notification d-none d-xl-block">

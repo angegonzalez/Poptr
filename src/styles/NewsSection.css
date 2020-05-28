@@ -32,42 +32,83 @@ footer {
 
 .trending-card-lg {
   box-shadow: 5px 5px 25px 0px rgba(46, 61, 73, 0.2);
-  background: linear-gradient(to left, #fdc830, #f37335); 
+  background: linear-gradient(to left, #fdc830, #f37335);
   position: fixed;
   height: 100px;
   width: 350px;
   left: 75%;
   top: 83%;
+  border-radius: 9px;
+  border: none;
 }
-.trending-card{
+.trending-card {
   box-shadow: 5px 5px 25px 0px rgba(46, 61, 73, 0.2);
-  background: linear-gradient(to left, #fdc830, #f37335); 
+  background: linear-gradient(to left, #fdc830, #f37335);
+  border-radius: 9px;
+  border: none;
 }
-.trending-item >code{
-  color:#ff9966;
+.trending-item > code {
+  color: #ff9966;
   font-weight: 1000;
   padding: 5px;
 }
-.trending-item{
+.trending-item {
   display: inline-block;
-  margin: .3em;
+  margin: 0.3em;
   background-color: rgba(255, 255, 255, 0.877);
   border: none;
   border-radius: 3px;
   padding: 0px;
-  
 }
-.new-notification{
+.new-notification {
   position: fixed;
   height: 100px;
   width: 350px;
   left: 75%;
   top: 68%;
 }
-.update-notification{
+.update-notification {
   position: fixed;
   height: 100%;
   width: 350px;
   left: 75%;
   top: 70%;
+}
+.notifications-stack {
+  position: fixed;
+  height: 374px;
+  width: 350px;
+  left: 75%;
+  top: 10%;
+  border-radius: 9px;
+  border: none;
+  box-shadow: 5px 5px 25px 0px rgba(46, 61, 73, 0.2);
+  padding: 1.5rem 2rem 2rem 2rem;
+}
+.notifications-stack .notifications-header {
+  margin-bottom: 10px;
+}
+.notifications-header .row .col-7 .media .media-body h6 {
+  color: #ff9966;
+}
+.notifications-header .row .col-7 .media img {
+  width: 38px;
+  filter: invert(0.4) sepia(2) saturate(47) hue-rotate(9deg);
+}
+.notifications-done {
+  margin-top: 20%;
+  height: 80px;
+
+}
+.notifications-body {
+  height: 100%;
+  overflow: auto;
+  text-align: justify;
+
+}
+.notifications-body::-webkit-scrollbar {
+  display: none;
+}
+.notifications-body::-webkit-scrollbar-thumb {
+ display: none;
 }

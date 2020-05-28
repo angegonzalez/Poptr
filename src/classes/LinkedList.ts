@@ -132,7 +132,7 @@ export class LinkedList<T>{
         
     }
 
-    public lenght(){
+    public length(){
         let count = 0;
         let node = this.head;
         while(node !== null){
@@ -140,5 +140,20 @@ export class LinkedList<T>{
             node = node.next;
         }
         return count;
+    }
+
+    public isEmpty(): boolean{
+        if (this.head === null) return true;
+        return false;
+    }
+
+    public getItems(){
+        let node = this.head;
+        let itemsArray = [];
+        while(node !== null){
+            itemsArray.push(node.data)
+            node = node.next;   
+        }
+        return itemsArray;
     }
 }

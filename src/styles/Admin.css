@@ -19,6 +19,8 @@
   box-shadow: 5px 5px 25px 0px rgba(46, 61, 73, 0.2);
   background: linear-gradient(to left, #fdc830, #f37335);
   text-align: center;
+  border: none;
+  border-radius: 4px;
 }
 .users-wrapper .wrapper-title > h4 {
   margin-top: 5%;

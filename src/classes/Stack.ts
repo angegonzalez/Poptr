@@ -10,8 +10,12 @@ export class Stack<T>{
     public push(data: T){
         this.stack.pushFront(data);
     }
-    public peek(){
+    public pop(){
         this.stack.removeNode(0);
+    }
+    public isEmpty(): boolean {
+       return this.stack.isEmpty();
     }
 
 }
+
