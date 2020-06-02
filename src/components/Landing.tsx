@@ -15,6 +15,7 @@ import ToastBody from "react-bootstrap/Toast";
   //testTrendings10M,
   //testTrendings50M
 } from "../classes/Trendings.js";*/
+import { testTurns10K } from "../classes/Turn";
 import { db } from "../App";
 import LandingNewsSection from "./LandingNewsSection";
 import { RouteComponentProps, withRouter } from "react-router-dom";
@@ -51,6 +52,9 @@ interface ILanding {
 // testTrendings10M();
 // 50.000.000   
 // testTrendings50M();
+
+// Priority Queue
+//  testTurns10K();
 
 const Landing: React.SFC<ILanding & RouteComponentProps> = (props) => {
   const [userName, setUserName] = React.useState("");

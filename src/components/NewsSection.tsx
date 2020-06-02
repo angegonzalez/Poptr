@@ -12,6 +12,7 @@ import { Stack } from "../classes/Stack";
 import notificationsStack from "../classes/Tasks";
 import Button from "./Button";
 import Task from "./Task";
+import Notifications from "./Notifications";
 
 interface hashTagData {
   hashTag: string;
@@ -36,7 +37,7 @@ const NewsSection: React.SFC<NewsSectionProps> = (props) => {
   const [test, settest] = React.useState(0);
   const [testFlag, settestFlag] = React.useState(false);
 
-  const [notifications, setnotifications] = React.useState(notificationsStack);
+  let notifications = new Stack<JSX.Element>();
 
   let hashTags: any = {};
 
@@ -143,17 +144,81 @@ const NewsSection: React.SFC<NewsSectionProps> = (props) => {
 
   getTopTrending();
 
-  const notificationsLogic = () => {
+  /*const notificationsLogic = () => {
     notifications.pop();
     setnotifications(notifications);
-  };
+  };*/
 
+  /*
   const doRender = () => {
     if (notifications.isEmpty()) {
       settestFlag(true);
     } else {
       settest(test + 1);
       notificationsLogic();
+    }
+  };
+  */
+
+  const getNotifications = () => {
+    const task = (
+      <Task
+        key={4}
+        name="Interactua"
+        description="Publica sobre algun trámite que requieras"
+        delay={2000}
+      ></Task>
+    );
+    const task2 = (
+      <Task
+        key={1}
+        name="Ayuda a otros usuarios"
+        description="Comenta en alguna publicación con información relevante"
+        delay={3500}
+      ></Task>
+    );
+    const task3 = (
+      <Task
+        key={2}
+        name="Explora la app"
+        description="Tenemos grandes funcionalidades para ti"
+        delay={2500}
+      ></Task>
+    );
+    const task4 = (
+      <Task
+        key={3}
+        name="Explora trámites"
+        description="Tenemos grandes funcionalidades para ti"
+        delay={3000}
+      ></Task>
+    );
+
+    notifications.push(task2);
+    notifications.push(task4);
+    notifications.push(task3);
+    notifications.push(task);
+
+    if (showUpdatedInfoToast) {
+      notifications.push(
+        <Task
+          key={5}
+          delay={1000}
+          description={"Has actualizado la información correctamente 🙋🏼‍♂️👌🏼"}
+          name={"Poptr"}
+        ></Task>
+      );
+    }
+    if (showToastNew) {
+      notifications.push(
+        <Task
+          key={6}
+          description={
+            "Has hecho una publicación 🔥🔥 , revisa la sección de publicaciones"
+          }
+          name={"Poptr"}
+        ></Task>
+      );
     }
   };
   return (
@@ -263,71 +328,10 @@ const NewsSection: React.SFC<NewsSectionProps> = (props) => {
             </footer>
           </div>
         </div>
-        <div className="notifications-stack d-none d-xl-block">
-          <div className="notifications-header">
-            <div className="row">
-              <div className="col-7">
-                <div className="media">
-                  <img
-                    src="https://image.flaticon.com/icons/svg/3003/3003961.svg"
-                    className="mr-3"
-                    alt="..."
-                  />
-                  <div className="media-body">
-                    <h6 className="mt-2 font-weight-bold">Tus objetivos</h6>
-                  </div>
-                </div>
-              </div>
-              <div className="col-5">
-                <Button name={"Quitar "} action={doRender}></Button>
-              </div>
-            </div>
-          </div>
-          <div className="notifications-body">
-            {!notifications.isEmpty() ? (
-              notifications.stack.getItems()
-            ) : (
-              <div className="notifications-done">
-                <Task
-                  name="¡Eso es todo!"
-                  description="Parece que completaste todos los objetivos 🎉. ¡Felicidades 🥳! "
-                />
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="update-notification d-none d-xl-block">
-          <Toast
-            onClose={() => setshowUpdatedInfoToast(false)}
-            show={showUpdatedInfoToast}
-            delay={3000}
-            autohide
-          >
-            <Toast.Header>
-              <strong className="mr-auto">Poptr</strong>
-              <small>just now</small>
-            </Toast.Header>
-            <Toast.Body>
-              Has actualizado la información correctamente 🙋🏼‍♂️👌🏼
-            </Toast.Body>
-          </Toast>
-        </div>
-        <div className="new-notification d-none d-xl-block">
-          <Toast
-            onClose={() => setshowToastNew(false)}
-            show={showToastNew}
-            delay={4000}
-            autohide
-          >
-            <Toast.Header>
-              <strong className="mr-auto">Poptr</strong>
-              <small>just now</small>
-            </Toast.Header>
-            <Toast.Body>
-              Has hecho una publicación 🔥🔥 , revisa la sección de
-              publicaciones
-            </Toast.Body>
-          </Toast>
+
+        <div className="notifications d-none d-xl-block">
+          {getNotifications()}
+          <Notifications notificationsStack={notifications}></Notifications>
         </div>
         <div className="d-none d-xl-block">
           <div

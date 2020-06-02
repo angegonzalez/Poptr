@@ -156,4 +156,14 @@ export class LinkedList<T>{
         }
         return itemsArray;
     }
+
+    public toArray(){
+        let node = this.head;
+        let array = []
+        while(node !== null){
+            array.push(node.data)
+            node = node.next
+        }
+        return array;
+    }
 }
