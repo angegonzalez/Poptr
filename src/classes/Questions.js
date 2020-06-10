@@ -1,3 +1,4 @@
+/*
 import Questions from "../data/questions01.json";
 import { Queue } from "../classes/Queue";
 import queue from "./Turns";
@@ -26,3 +27,4 @@ export const testQuestions1K = () => {
     console.timeEnd('peek');
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 import Turns from "../data/Turns.json";
 import { PriorityQueue } from "../classes/PriorityQueue";
 
@@ -41,8 +42,9 @@ export const testTurns10K = () => {
     queue.traverseS();
     console.log(queue.heap);
     console.timeEnd('traverseS');
-    */
+   
     
 
 
 }
+ */s
