@@ -13,8 +13,9 @@ import {
 import Landing from "./components/Landing";
 import TransactionSection from "./components/TransactionsSection";
 import Profile from "./components/Profile";
-import Admin from "./components/Admin";
+import Admin, { Question } from "./components/Admin";
 import { Stack } from "./classes/Stack";
+import { Queue } from "./classes/Queue";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBUKo-7_RNCanGw1_EtGc8bejX5Hk2-Gag",
@@ -28,10 +29,12 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 
+
 function App() {
   const [isLoggedIn, setLoggedIn] = React.useState(false);
   const [isAdminLoggedIn, setAdminLoggedIn] = React.useState(false);
   const [updatedUserInfo, setupdatedUserInfo] = React.useState(false);
+  
   return (
     <>
       <Router>

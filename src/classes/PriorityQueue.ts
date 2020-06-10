@@ -7,65 +7,61 @@ export class Node<T>{
 }
 
 export class PriorityQueue<T>{
-    heap: Array<Node<T>>;
+    heap: Node<T>[];
     size: number;
     count: number;
     maxSize: number;
 
-    constructor(maxSize: number, heap?: Array<Node<T>>, size?: number, count?: number) {
-        if (maxSize && heap && size && count) {
+    constructor(maxSize?: number, heap?: Node<T>[], size?: number, count?: number) {
+        if (heap && size) {
             this.heap = heap;
             this.size = size;
-            this.maxSize = maxSize;
-            this.count = count;
+            this.maxSize = maxSize!;
+            this.count = count!;
         }
         else {
-            this.heap = new Array<Node<T>>(maxSize)
+            this.heap = []
             this.size = 0
-            this.maxSize = maxSize
-            this.count = 1;
+            this.maxSize = 1;
+            this.count = 0;
         }
 
     }
 
     public parent = (i: number): number => {
-        return Math.floor(i / 2);
+        return Math.floor((i - 1) / 2);
     }
     public leftChild = (i: number): number => {
-        return 2 * i;
+        return (2 * i + 1);
     }
     public rightChild = (i: number): number => {
-        return 2 * i + 1;
+        return (2 * i + 2);
     }
 
     public insert = (data: T): boolean => {
-        if (this.size == this.maxSize) {
-            console.log("Full queue");
-            return false;
-        } else {
-            this.size++;
-            this.heap[this.size] = new Node(data);
-            this.siftUp(this.size);
-            return true;
-        }
-
+        this.size++;
+        let curr = this.size - 1;
+        this.heap[curr] = new Node(data);
+        this.siftUp(curr);
+        return true;
     }
 
     public traverse() {
-        for (let i = 1; i <= this.size; i++) {
+        for (let i = 0; i < this.size; i++) {
             console.log(this.heap[i]);
         }
     }
 
 
     public traverseS() {  //traverse the sorted array
-        for (let i = this.count; i >= 1; i--) {
+        for (let i = this.count; i >= 0; i--) {
             console.log(this.heap[i]);
         }
     }
+
     public siftUp = (i: number) => {
 
-        while (i > 1 && this.heap[this.parent(i)].data.priority < this.heap[i].data.priority) {
+        while (i >= 1 && this.heap[i].data.priority < this.heap[this.parent(i)].data.priority) {
             let tmp = this.heap[this.parent(i)];
             this.heap[this.parent(i)] = this.heap[i];
             this.heap[i] = tmp;
@@ -73,49 +69,39 @@ export class PriorityQueue<T>{
         }
     }
     public siftDown = (i: number) => {
-        let maxIndex = i;
+        let minIndex = i;
         let l = this.leftChild(i);
-        if (l <= this.size && this.heap[l].data.priority > this.heap[maxIndex].data.priority) {
-            maxIndex = l;
+        if (l < this.size && this.heap[l].data.priority < this.heap[minIndex].data.priority) {
+            minIndex = l;
         }
         let r = this.rightChild(i);
-        if (r <= this.size && this.heap[r].data.priority > this.heap[maxIndex].data.priority) {
-            maxIndex = r;
+        if (r < this.size && this.heap[r].data.priority < this.heap[minIndex].data.priority) {
+            minIndex = r;
         }
-        if (i !== maxIndex) {
+        if (minIndex !== i) {
 
             let tmp = this.heap[i];
-            this.heap[i] = this.heap[maxIndex];
-            this.heap[maxIndex] = tmp;
-            this.siftDown(maxIndex);
+            this.heap[i] = this.heap[minIndex];
+            this.heap[minIndex] = tmp;
+            this.siftDown(minIndex);
         }
 
     }
 
     public heapSort() {
         let n = this.size;
-        for (let i = 1; i < n; i++) {
-            let tmp = this.heap[1];
-            this.heap[1] = this.heap[this.size];
-            this.heap[this.size] = tmp;
+        for (let i = 0; i < n; i++) {
+            let tmp = this.heap[0];
+            this.heap[0] = this.heap[this.size - 1];
+            this.heap[this.size - 1] = tmp;
             this.size--;
             this.count++;
-            this.siftDown(1);
+            this.siftDown(0);
         }
     }
 
-    /*public extractMax(){ para arreglo ordenado
 
-     //console.log(this.count);  "new size" since size is now 0 after the heap sort 
-       let max = this.heap[this.count];
-       this.heap[this.count] = this.heap[1];
-       this.count--;
-       this.siftDown(this.count);
-       console.log(max);
-
-    }*/
-
-    public extractMax() {
+    /*public extractMax() {
 
         let max = this.heap[1];
         this.heap[1] = this.heap[this.size];
@@ -125,14 +111,32 @@ export class PriorityQueue<T>{
 
         return max;
 
+    }*/
+
+
+    public extractMin() {
+
+        if (this.size === 0) return
+        let min = this.heap[0];
+        console.log(this.heap[0])
+        this.heap[0] = this.heap[this.size - 1];
+        let myHeap = this.heap;
+        myHeap.pop()
+        this.heap = myHeap;
+        //console.log(min.data);
+        this.size--;
+        this.siftDown(0);
+
+        return this.heap;
+
     }
 
     public remove = (i: number) => {
 
-        this.heap[i].data.priority = Number.MAX_SAFE_INTEGER;
-        this.siftUp(i);
+        this.changePriority(i, Number.MIN_SAFE_INTEGER);
+        let removed = this.extractMin();
         //let removed = this.extractMax();
-        //console.log("Removed: "+ removed.data.name);
+        // if (removed) console.log("Removed: " + removed.data.name);
 
     }
 
@@ -140,7 +144,7 @@ export class PriorityQueue<T>{
 
         let oldPr = this.heap[i].data.priority;
         this.heap[i].data.priority = p;
-        if (p > oldPr) {
+        if (p < oldPr) {
             this.siftUp(i);
         } else
             this.siftDown(i);

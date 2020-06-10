@@ -1,7 +1,12 @@
 import React from "react";
 import "../styles/Transaction.css";
 import Modal from "react-bootstrap/Modal";
+import { PriorityQueue } from "../classes/PriorityQueue";
+import firebase from "firebase";
+import { db } from "../App";
+
 export interface TransactionProps {
+  transactionId: string;
   transactionName: string;
   companyName: string;
   campus: string;
@@ -9,10 +14,40 @@ export interface TransactionProps {
   transactionDescription: string;
   imgPlace: string;
   documents: string[];
+  priority: number;
+  isinQueue: boolean;
 }
 
 const Transaction: React.SFC<TransactionProps> = (props) => {
   const [showModal, setShowModal] = React.useState(false);
+  const loggedUser = firebase.auth().currentUser!.email;
+
+  const addTransaction = () => {
+    let userId = "";
+    db.collection("users")
+      .where("user", "==", loggedUser)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          userId = doc.id;
+        });
+        const userRef = db.collection("users").doc(userId);
+        userRef.update({
+          transactions: firebase.firestore.FieldValue.arrayUnion({
+            transactionName: props.transactionName,
+            campus: props.campus,
+            campusLocation: props.campusLocation,
+            imgPlace: props.imgPlace,
+            priority: props.priority,
+          }),
+        });
+      });
+
+    /*
+   
+    */
+  };
+
   return (
     <>
       <div className="card mb-3 mt-4">
@@ -67,7 +102,13 @@ const Transaction: React.SFC<TransactionProps> = (props) => {
                 </Modal>
               </div>
               <div className="row mt-2">
-                <button type="button" className="btn btn-dark btn-block">
+                <button
+                  type="button"
+                  className="btn btn-dark btn-block"
+                  onClick={() => {
+                    addTransaction();
+                  }}
+                >
                   Agendar
                 </button>
               </div>

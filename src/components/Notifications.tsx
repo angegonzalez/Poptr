@@ -22,6 +22,7 @@ const Notifications: React.SFC<NotificationsProps> = (props) => {
         }
       }, 10000 * (index + 20));
     });
+    return () => {};
   });
 
   return <>{notificationsArray}</>;

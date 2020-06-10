@@ -129,7 +129,7 @@ export class LinkedList<T>{
         }
         console.log("Removed : ");
         console.log(curr.data);
-        
+        return curr.data;
     }
 
     public length(){

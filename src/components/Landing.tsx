@@ -15,7 +15,7 @@ import ToastBody from "react-bootstrap/Toast";
   //testTrendings10M,
   //testTrendings50M
 } from "../classes/Trendings.js";*/
-import { testTurns10K } from "../classes/Turn";
+//import { testTurns10K } from "../classes/Turn";
 import { db } from "../App";
 import LandingNewsSection from "./LandingNewsSection";
 import { RouteComponentProps, withRouter } from "react-router-dom";

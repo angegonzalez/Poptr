@@ -1,8 +1,10 @@
-*.json filter=lfs diff=lfs merge=lfs -text
-userData.json filter=lfs diff=lfs merge=lfs -text
-userData02.json filter=lfs diff=lfs merge=lfs -text
-userData03.json filter=lfs diff=lfs merge=lfs -text
-userData04.json filter=lfs diff=lfs merge=lfs -text
 hashTagsData.json filter=lfs diff=lfs merge=lfs -text
 hashTagsData02.json filter=lfs diff=lfs merge=lfs -text
 hashTagsData03.json filter=lfs diff=lfs merge=lfs -text
+questions01.json filter=lfs diff=lfs merge=lfs -text
+userData.json filter=lfs diff=lfs merge=lfs -text
+userData02.json filter=lfs diff=lfs merge=lfs -text
+Turns.json filter=lfs diff=lfs merge=lfs -text
+Turns02.json filter=lfs diff=lfs merge=lfs -text
+userData03.json filter=lfs diff=lfs merge=lfs -text
+userData04.json filter=lfs diff=lfs merge=lfs -text

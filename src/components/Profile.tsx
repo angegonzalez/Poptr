@@ -6,13 +6,15 @@ import { cleanup } from "@testing-library/react";
 import Button from "./Button";
 import "../styles/Profile.css";
 import { RouteComponentProps, withRouter, Route } from "react-router-dom";
+import { Queue } from "../classes/Queue";
+import { Question } from "./Admin";
 
-interface ProfileProps{
-  setupdatedUserInfo: React.Dispatch<React.SetStateAction<boolean>>
+interface ProfileProps {
+  setupdatedUserInfo: React.Dispatch<React.SetStateAction<boolean>>;
 }
+export const myQueue = new Queue<Question>();
 
-
-const Profile: React.SFC <RouteComponentProps & ProfileProps>  = (props) => {
+const Profile: React.SFC<RouteComponentProps & ProfileProps> = (props) => {
   const [users, setUsers] = React.useState<firebase.firestore.DocumentData[]>();
   let userSignedInInfo: firebase.firestore.DocumentData = {};
   const loggedUser = firebase.auth().currentUser!.email;
@@ -21,6 +23,7 @@ const Profile: React.SFC <RouteComponentProps & ProfileProps>  = (props) => {
   const [userNameUpdate, setuserNameUpdate] = React.useState("");
   const [userDescriptionUpdate, setuserDescriptionUpdate] = React.useState("");
   const [userPhotoUpdate, setuserPhotoUpdate] = React.useState("");
+  const [question, setquestion] = React.useState("");
 
   React.useEffect(() => {
     props.setupdatedUserInfo(false);
@@ -60,11 +63,11 @@ const Profile: React.SFC <RouteComponentProps & ProfileProps>  = (props) => {
 
     userRef
       .update(updatedUser)
-      .then(() => console.log('Usuario actualizado'))
+      .then(() => console.log("Usuario actualizado"))
       .catch(() => console.log("Ocurrio un error al actualizar"));
- 
-      props.history.push("/home");
-      props.setupdatedUserInfo(true);
+
+    props.history.push("/home");
+    props.setupdatedUserInfo(true);
   };
 
   return (
@@ -110,7 +113,11 @@ const Profile: React.SFC <RouteComponentProps & ProfileProps>  = (props) => {
                 <label htmlFor="inputUserPhoto">URL de la foto</label>
                 <div className="row">
                   <div className="col-2">
-                    <img src={userSignedInInfo.userPhoto} alt="..." width="45px"/>
+                    <img
+                      src={userSignedInInfo.userPhoto}
+                      alt="..."
+                      width="45px"
+                    />
                   </div>
                   <div className="col-10">
                     <input
@@ -126,6 +133,31 @@ const Profile: React.SFC <RouteComponentProps & ProfileProps>  = (props) => {
             </form>
             <div className="button-submit">
               <Button name="Confirmar" action={updateUser}></Button>
+            </div>
+          </div>
+        </div>
+        <div className="col-xl-4 col-sm-9">
+          <div className="card">
+            <div className="card-header">
+              <h5>¿Alguna pregunta?</h5>
+            </div>
+            <div className="card-body">
+              <p className="card-text">Asegúrate de preguntar claramente 🙋🏻‍♂️</p>
+              <textarea
+                className="form-control mt-2 mb-2"
+                id="descriptionTextArea"
+                onChange={(e) => setquestion(e.target.value)}
+              ></textarea>
+              <Button
+                name={"Preguntar"}
+                action={() => {
+                  db.collection("questions").add({
+                    user: userSignedInInfo.id,
+                    question: question,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                  });
+                }}
+              ></Button>
             </div>
           </div>
         </div>

@@ -1,18 +1,20 @@
 import React from "react";
 import "../styles/TransactionSection.css";
-import Transaction from "./Transaction";
+import Transaction, { TransactionProps } from "./Transaction";
 import { db } from "../App";
-import queue from "../classes/Turns";
 import { PriorityQueue } from "../classes/PriorityQueue";
-import Turn, { TurnProps } from "./Turn";
 import Turns from "./Turns";
+
 export interface TransactionSectionProps {}
+
+
+
 
 const TransactionSection: React.SFC<TransactionSectionProps> = () => {
   const [transactions, setTransactions] = React.useState<
     firebase.firestore.DocumentData[]
   >([]);
-
+  const [doRender, setdoRender] = React.useState(0)
   React.useEffect(() => {
     const fetchData = async () => {
       db.collection("transactions")
@@ -32,7 +34,6 @@ const TransactionSection: React.SFC<TransactionSectionProps> = () => {
 
   return (
     <div className="row mb-3 mr-2 ml-2">
-      {console.log("Hola")}
       <div className="col-md-6 col-sm-10 col-lg-6 mt-2">
         <div className="container-fluid transaction-section">
           <h5 className="mb-3">Estos son los trámites que puedes hacer</h5>
@@ -41,6 +42,7 @@ const TransactionSection: React.SFC<TransactionSectionProps> = () => {
                 return (
                   <Transaction
                     key={trans.id}
+                    transactionId={trans.id}
                     transactionName={trans.transactionName}
                     companyName={trans.companyName}
                     campus={trans.campus}
@@ -48,13 +50,15 @@ const TransactionSection: React.SFC<TransactionSectionProps> = () => {
                     transactionDescription={trans.transactionDescription}
                     imgPlace={trans.imgPlace}
                     documents={trans.documents}
+                    priority= {trans.priority}
+                    isinQueue={false}
                   ></Transaction>
                 );
               })
             : null}
         </div>
       </div>
-      <div className="col-md-6 col-sm-10 col-lg-6 mt-2">
+      <div className="col-md-6 col-sm-10 col-lg-4 mt-2">
         <div className="container-fluid transaction-section">
           <Turns></Turns>
         </div>
