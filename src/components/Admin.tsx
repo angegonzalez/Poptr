@@ -7,6 +7,7 @@ import Button from "./Button";
 import { truncate } from "fs";
 import { Queue } from "../classes/Queue";
 import UserSection from "./UserSection";
+import { HashTable } from "../classes/HashTable";
 export interface AdminProps {}
 
 export interface Question {
@@ -34,6 +35,8 @@ const Admin: React.SFC<AdminProps> = () => {
   >([]);
   const [queue, setqueue] = React.useState(new Queue<UserProps & Question>());
   const [count, setcount] = React.useState(1);
+
+  const myHashTable = new HashTable(5);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -86,21 +89,21 @@ const Admin: React.SFC<AdminProps> = () => {
     if (e.key === "Enter") {
       const user = searchUser();
       setuserShow(user);
-      if (Object.keys(userShow).length !== 0) console.log("Sip");
+      //if (Object.keys(userShow).length !== 0) console.log("Sip");
     }
   };
 
   const searchUser = () => {
-    let user: firebase.firestore.DocumentData = {};
-    users!.map((us) => {
-      if (us.userName.toLowerCase().includes(userSearch.toLowerCase())) {
-        user = us;
-      }
-    });
-    if (Object.keys(user).length !== 0) {
-      return user;
+    const searchPosition = myHashTable.getPolyHash(
+      userSearch,
+      myHashTable.length
+    );
+    if (myHashTable.myHashTable[searchPosition] === undefined) {
+      return {};
+    } else {
+      console.log(myHashTable.myHashTable[searchPosition]);
+      return myHashTable.myHashTable[searchPosition].searchUser(userSearch)?.data;
     }
-    return {};
   };
 
   const getQuestions = () => {
@@ -199,6 +202,13 @@ const Admin: React.SFC<AdminProps> = () => {
                     <small>Una lista de personas que usan la app</small>
                   </div>
                   {users?.map((user) => {
+                    let myUser: UserProps = {
+                      user: user.user,
+                      userDescription: user.userDescription,
+                      userName: user.userName,
+                      userPhoto: user.userPhoto,
+                    };
+                    myHashTable.add(myUser);
                     return (
                       <User
                         user={user.user}
@@ -210,6 +220,7 @@ const Admin: React.SFC<AdminProps> = () => {
                     );
                   })}
                   {wait()}
+                  {console.log(myHashTable.myHashTable)}
                 </div>
               </div>
             </div>
@@ -258,7 +269,9 @@ const Admin: React.SFC<AdminProps> = () => {
                 <div className="col-lg-7 col-md-7">
                   <div className="queue-card-title">
                     <h4 className="mb-0">Cola de preguntas</h4>
-                    <small className="mt-0">Resuelve las dudas de tus usuarios</small>
+                    <small className="mt-0">
+                      Resuelve las dudas de tus usuarios
+                    </small>
                   </div>
                 </div>
                 <div className="col-lg-5 col-md-5 col-sm-12">
@@ -272,7 +285,9 @@ const Admin: React.SFC<AdminProps> = () => {
                             queue.queue,
                             queue.length
                           );
-                          db.collection("questions").doc(question.idquestion).delete();
+                          db.collection("questions")
+                            .doc(question.idquestion)
+                            .delete();
 
                           setqueue(newQueue);
                         }

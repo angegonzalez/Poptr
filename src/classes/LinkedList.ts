@@ -166,4 +166,14 @@ export class LinkedList<T>{
         }
         return array;
     }
+
+    public searchUser= ( user :String) =>{
+        let node = this.head;
+        while(node !== null){
+            if(node.data.user === user) break;
+            node = node.next
+        }
+        return node; 
+    }
+
 }
