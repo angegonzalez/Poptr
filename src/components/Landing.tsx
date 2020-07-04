@@ -1,13 +1,9 @@
 import React from "react";
 import "../styles/Landing.css";
-import landing from "../resources/landing.svg";
-import CardInfo from "./CardInfo";
 import footer from "../resources/footer_img.svg";
 import * as firebase from "firebase/app";
 import ReactCardFlip from "react-card-flip";
 import Toast from "react-bootstrap/Toast";
-import ToastHeader from "react-bootstrap/Toast";
-import ToastBody from "react-bootstrap/Toast";
 /*import {
   //testTrendings10K,
   //testTrendings100K, 

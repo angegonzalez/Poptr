@@ -1,8 +1,6 @@
 import React from "react";
 import firebase from "firebase";
 import { db } from "../App";
-import { Stack } from "../classes/Stack";
-import { LinkedListNode } from "../classes/LinkedList";
 import LandingNew from "./LandingNew";
 
 export interface LandingNewsSectionProps {}

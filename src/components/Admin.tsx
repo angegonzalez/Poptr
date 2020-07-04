@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { db } from "../App";
 import * as firebase from "firebase";
 import "../styles/Admin.css";
 import User, { UserProps } from "./User";
 import Button from "./Button";
-import { truncate } from "fs";
 import { Queue } from "../classes/Queue";
-import UserSection from "./UserSection";
 import { HashTable } from "../classes/HashTable";
 export interface AdminProps {}
 

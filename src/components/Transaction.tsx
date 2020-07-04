@@ -1,7 +1,6 @@
 import React from "react";
 import "../styles/Transaction.css";
 import Modal from "react-bootstrap/Modal";
-import { PriorityQueue } from "../classes/PriorityQueue";
 import firebase from "firebase";
 import { db } from "../App";
 

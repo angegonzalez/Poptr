@@ -1,8 +1,7 @@
 import React from "react";
 import "../styles/TransactionSection.css";
-import Transaction, { TransactionProps } from "./Transaction";
+import Transaction from "./Transaction";
 import { db } from "../App";
-import { PriorityQueue } from "../classes/PriorityQueue";
 import Turns from "./Turns";
 
 export interface TransactionSectionProps {}
@@ -14,7 +13,6 @@ const TransactionSection: React.SFC<TransactionSectionProps> = () => {
   const [transactions, setTransactions] = React.useState<
     firebase.firestore.DocumentData[]
   >([]);
-  const [doRender, setdoRender] = React.useState(0)
   React.useEffect(() => {
     const fetchData = async () => {
       db.collection("transactions")

@@ -117,7 +117,7 @@ export class PriorityQueue<T>{
     public extractMin() {
 
         if (this.size === 0) return
-        let min = this.heap[0];
+        //let min = this.heap[0];
         console.log(this.heap[0])
         this.heap[0] = this.heap[this.size - 1];
         let myHeap = this.heap;
@@ -134,7 +134,7 @@ export class PriorityQueue<T>{
     public remove = (i: number) => {
 
         this.changePriority(i, Number.MIN_SAFE_INTEGER);
-        let removed = this.extractMin();
+        this.extractMin();
         //let removed = this.extractMax();
         // if (removed) console.log("Removed: " + removed.data.name);
 

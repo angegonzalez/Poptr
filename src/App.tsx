@@ -13,9 +13,7 @@ import {
 import Landing from "./components/Landing";
 import TransactionSection from "./components/TransactionsSection";
 import Profile from "./components/Profile";
-import Admin, { Question } from "./components/Admin";
-import { Stack } from "./classes/Stack";
-import { Queue } from "./classes/Queue";
+import Admin from "./components/Admin";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBUKo-7_RNCanGw1_EtGc8bejX5Hk2-Gag",

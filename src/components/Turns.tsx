@@ -2,7 +2,6 @@ import React from "react";
 import { db } from "../App";
 import firebase from "firebase";
 import { PriorityQueue } from "../classes/PriorityQueue";
-import Transaction from "./Transaction";
 import Turn from "./Turn";
 import Button from "./Button";
 
@@ -12,7 +11,6 @@ const Turns: React.SFC<TurnsProps> = () => {
   const loggedUser = firebase.auth().currentUser!.email;
   const [turns, setturns] = React.useState(new PriorityQueue<any>());
   const [user, setuser] = React.useState("");
-  const [transactions, settransactions] = React.useState<any[]>([]);
   React.useEffect(() => {
     const fetchData = async () => {
       let userId = "";

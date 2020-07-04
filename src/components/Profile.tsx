@@ -1,11 +1,9 @@
 import React from "react";
 import { db } from "../App";
-import User, { UserProps } from "./User";
 import firebase from "firebase";
-import { cleanup } from "@testing-library/react";
 import Button from "./Button";
 import "../styles/Profile.css";
-import { RouteComponentProps, withRouter, Route } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Queue } from "../classes/Queue";
 import { Question } from "./Admin";
 

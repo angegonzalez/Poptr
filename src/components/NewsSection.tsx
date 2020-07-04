@@ -1,16 +1,11 @@
 import React from "react";
-import New, { NewProps } from "./New";
+import New from "./New";
 import "../styles/NewsSection.css";
 import { db } from "../App";
 import * as firebase from "firebase";
-import $ from "jquery";
 import Modal from "react-bootstrap/Modal";
-import UserSection from "./UserSection";
-import Toast from "react-bootstrap/Toast";
 import { AVLTree } from "../classes/AVLTree";
 import { Stack } from "../classes/Stack";
-import notificationsStack from "../classes/Tasks";
-import Button from "./Button";
 import Task from "./Task";
 import Notifications from "./Notifications";
 
@@ -34,9 +29,6 @@ const NewsSection: React.SFC<NewsSectionProps> = (props) => {
   const [showUpdatedInfoToast, setshowUpdatedInfoToast] = React.useState(
     props.updatedUserInfo
   );
-  const [test, settest] = React.useState(0);
-  const [testFlag, settestFlag] = React.useState(false);
-
   let notifications = new Stack<JSX.Element>();
 
   let hashTags: any = {};

@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "../resources/seo-and-web.svg";
 import Commentary from "./Commentary";
 import * as firebase from "firebase";
 import { db } from "../App";
@@ -25,7 +24,6 @@ const New: React.SFC<NewProps> = (props) => {
   const [likes, setLikes] = React.useState(props.likes);
   const [likedNew, setLikedNew] = React.useState(false);
   const commentsLinkedList = new LinkedList();
-  let iteratorCommentsLinkedList = commentsLinkedList.items();
   let newDescription = props.newDescription;
 
   const onClickComment = () => {
@@ -61,17 +59,6 @@ const New: React.SFC<NewProps> = (props) => {
         inputRef.current.value = "";
       }
     }
-  };
-  const traverseLinkedList = () => {
-    getCommentsToLinkedList();
-    // while (true) {
-    //   let item = iteratorCommentsLinkedList.next();
-    //   if (item.done) break;
-    //   else {
-    //     console.log(item.value.data);
-    //   }
-    // }
-    console.log(commentsLinkedList);
   };
 
   const handleLikeClick = () => {
