@@ -1,4 +1,4 @@
-
+/*
 import { HashTable } from "./HashTable";
 import users from "../data/userData03.json";
 
@@ -29,4 +29,4 @@ export const testUsers10K = () => {
     console.timeEnd('search');
     */
 
-}
+// }

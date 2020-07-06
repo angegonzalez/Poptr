@@ -15,7 +15,7 @@ import Toast from "react-bootstrap/Toast";
 import { db } from "../App";
 import LandingNewsSection from "./LandingNewsSection";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { testUsers10K } from "../classes/Users_HT";
+//import { testUsers10K } from "../classes/Users_HT";
 
 interface ILanding {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -55,7 +55,7 @@ interface ILanding {
 
 
 // HashTable Operations
- testUsers10K();
+//  testUsers10K();
 
 const Landing: React.SFC<ILanding & RouteComponentProps> = (props) => {
   const [userName, setUserName] = React.useState("");
