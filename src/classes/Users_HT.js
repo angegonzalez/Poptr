@@ -1,8 +1,8 @@
-/*
-import { HashTable } from "./HashTable";
-import users from "../data/userData.json";
 
-let usersHashTable = new HashTable(100);
+import { HashTable } from "./HashTable";
+import users from "../data/userData03.json";
+
+let usersHashTable = new HashTable(500000);
 
 export const testUsers10K = () => {
 
@@ -13,9 +13,12 @@ export const testUsers10K = () => {
     });
     console.timeEnd('fill');
 
-    //let userToSearch = 'Ashlynn_Lindgren@odell.us';
-    let userToSearch = 'Janie@archibald.biz';
+    console.log(usersHashTable)
 
+    //let userToSearch = 'Ashlynn_Lindgren@odell.us';
+    //let userToSearch = 'Janie@archibald.biz';
+
+    /*
     console.time('search');
     let mySearchPosition = usersHashTable.getPolyHash(userToSearch, usersHashTable.myHashTable.length);
     //console.log(mySearchPosition);
@@ -24,6 +27,6 @@ export const testUsers10K = () => {
         console.log(mySearchLinkedList.searchUser(userToSearch).data)
     }
     console.timeEnd('search');
+    */
 
 }
-*/

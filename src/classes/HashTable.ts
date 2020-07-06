@@ -55,6 +55,7 @@ export class HashTable {
     }
 
     private doubleCapacity = () => {
+        console.log('Here my capacity')
         let myNewLength = this.length * 2;
         let myOldHT = this.myHashTable;
         let myNewHT = new Array<LinkedList<UserProps>>(myNewLength);
